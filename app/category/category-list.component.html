@@ -3,8 +3,8 @@
     <div class="panel-heading">Categories <a (click)="goToCategoryForm()" class="btn btn-primary">Add new</a></div>
     
     <!-- Table -->
-    <spiner [visible]="loading"></spiner>
-    <table *ngIf="!loading" class="table">
+    <!--<spiner [visible]="loading"></spiner>-->
+    <table class="table">
         <thead>
             <tr>
                 <th>Name</th>
@@ -14,13 +14,12 @@
         </thead>             
         <tbody>     
             <tr></tr>       
-            <tr *ngFor="let category of categories">
+            <tr *ngFor="let category of _categoryStore.categories | async">
                 <td>{{category.name}}</td>
                 <td>{{category.description}}</td>
                 <td>
                     <button class="btn btn-success" (click)="goToCategoryDetails(category.id)">Details</button>
-                    <button class="btn btn-primary" (click)="goToCategoryForm(category.id)">Edit</button>
-                    <button class="btn btn-danger">Delete</button>
+                    <button class="btn btn-primary" (click)="goToCategoryForm(category.id)">Edit</button>                    
                 </td>
             </tr>
         </tbody>

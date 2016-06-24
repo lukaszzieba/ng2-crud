@@ -1,17 +1,26 @@
 // ng2
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 
 // my components
 import { Category, CategoryService } from './category.service';
 
+
 @Component({
     selector: 'category-form',
     templateUrl: './app/category/category-form.component.html',
-    providers: [CategoryService]
+    providers: [
+        CategoryService,        
+    ]  
 })
 export class CategoryFormComponent implements OnInit {
 
+    isAddMode() {
+
+    }
+
+    categoryId: number;
+    parentId: number;
     category: Category;
 
     constructor(
@@ -22,24 +31,30 @@ export class CategoryFormComponent implements OnInit {
         this.category.is_visible = true;
     }
 
-    save() {
-        this.category.parent_id = 11;
+    save() {       
+        this.parentId ? this.category.parent_id = this.parentId : this.category.parent_id = this._categoryService.getRootCategoryId();        
         this.category.ordering = 5;
         this._categoryService.addCategory(this.category);
         this._backToCategories();
     }
 
+
     ngOnInit() {
         this._activatedRoute.params.subscribe(params => {
-            let id = +params['id'];
-            if (id) {
-                this._categoryService.getCategoryById(id)
+            // for edit 
+            this.categoryId = +params['id'];
+
+            // add nested category
+            this.parentId = +params['parentId'];
+
+            if (this.categoryId) {
+                this._categoryService.getCategoryById(this.categoryId)
                     .subscribe(category => this.category = category);
-            }
+            }           
         });
     }
     private _backToCategories() {
         let route = ['/categories'];
-        this._router.navigate(route);
+        this._router.navigate
     }
 }

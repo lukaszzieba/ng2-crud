@@ -14,6 +14,7 @@ export const routes: RouterConfig = [
   // { path: 'dashboard', component: DashboardComponent },
   { path: 'categories', component: CategoryListComponent },
   { path: 'category/:id', component: CategoryFormComponent },
+  { path: 'category/parent/:parentId', component: CategoryFormComponent },
   { path: 'details/:id', component: CategoryDetailsComponent }
 ];
 

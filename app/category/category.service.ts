@@ -30,7 +30,7 @@ export class CategoryService {
 
     getRootCategory() {
         return this._http.get(rootCategory)
-            .map((response: Response) => response.json().data)
+            // .map((response: Response) => response.json().data)
             // .catch(this.errorHandler);
     }
 
@@ -54,9 +54,9 @@ export class CategoryService {
 
     getCategoryByParentId(parent_id: number) {
         let url = categoriesUrl + '/?parent_id=' + parent_id;
-        console.log(url);
+        // console.log(url);
         return this._http.get(url)
-            .map((response: Response) => <Category[]>response.json().data)
+            // .map((response: Response) => <Category[]>response.json().data)
         // .catch(this.errorHandler);
     }
 

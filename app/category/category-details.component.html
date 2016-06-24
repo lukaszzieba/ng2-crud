@@ -12,9 +12,10 @@
 </div>
 <div class="col-md-6">
     <h2>Sub</h2>
-    <div *ngFor="let cat of subCategories">
+    <!--<div *ngFor="let cat of _categoryStore.categories | async">
         {{cat | json}}
-    </div>
+    </div>-->
+    <category-list></category-list>
 </div>
 <div class="col-md-6">
     <h2>products</h2>
