@@ -44,6 +44,29 @@ export class CategoryStore {
             }
         });
     }
+
+    addCategory(category: Category) {
+
+        let obs = this._categoryService.addCategory(category);
+        obs.subscribe(
+            res => {
+                let categories = <Category[]>res.json().data;
+                this._categories.next(categories);
+            });
+
+        return obs;
+    }
+
+    // deep delete ??
+    deleteCategory(id : number) {
+        let obs = this._categoryService.deleteCategory(id); 
+        return obs;
+    }
+
+    update(category : Category) {
+        let obs = this._categoryService.updateCategory(category); 
+        return obs;
+    }
 }
 
 

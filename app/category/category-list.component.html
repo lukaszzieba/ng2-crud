@@ -1,7 +1,7 @@
 <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading">Categories <a (click)="goToCategoryForm()" class="btn btn-primary">Add new</a></div>
-    
+
     <!-- Table -->
     <!--<spiner [visible]="loading"></spiner>-->
     <table class="table">
@@ -11,15 +11,15 @@
                 <th>Description</th>
                 <th>Actions</th>
             </tr>
-        </thead>             
-        <tbody>     
-            <tr></tr>       
+        </thead>
+        <tbody>
+            <tr></tr>
             <tr *ngFor="let category of _categoryStore.categories | async">
                 <td>{{category.name}}</td>
                 <td>{{category.description}}</td>
                 <td>
                     <button class="btn btn-success" (click)="goToCategoryDetails(category.id)">Details</button>
-                    <button class="btn btn-primary" (click)="goToCategoryForm(category.id)">Edit</button>                    
+                    <button class="btn btn-primary" (click)="goToCategoryForm(category.id)">Edit</button>
                 </td>
             </tr>
         </tbody>

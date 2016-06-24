@@ -29,7 +29,7 @@ export class CategoryDetailsComponent implements OnInit {
 
     constructor(
         private _categoryService: CategoryService,
-        private router: Router,
+        private _router: Router,
         private _activatedRoute: ActivatedRoute,
         private _categoryStore: CategoryStore
     ) { }
@@ -41,6 +41,12 @@ export class CategoryDetailsComponent implements OnInit {
                 this.category = category
                 console.log(this.category);
             });
+    }
+
+    goToEdit() {
+         if (this.category.id) {
+                this._router.navigate(['/category', this.category.id]);
+         }
     }
 
     getSubCategories(parent_id: number) {
