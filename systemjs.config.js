@@ -9,7 +9,10 @@
         'app': 'app', // 'dist',
         '@angular': 'node_modules/@angular',
         'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
-        'rxjs': 'node_modules/rxjs'  
+        'rxjs': 'node_modules/rxjs',
+        'angular2-modal': 'node_modules/angular2-modal',
+        'angular2-modal/platform-browser': 'node_modules/angular2-modal/platform-browser',
+        'angular2-modal/package.json': 'node_modules/angular2-modal/package.json'
         // 'immutable': 'node_modules/immutable/dist'
     };
 
@@ -25,7 +28,11 @@
         'angular2-in-memory-web-api': {
             main: 'index.js',
             defaultExtension: 'js'
-        }    
+        },
+        'angular2-modal': { defaultExtension: 'js', main: 'index' },
+        'angular2-modal/platform-browser' : { defaultExtension: 'js', main: 'index' },
+        'angular2-modal/plugins/bootstrap': { defaultExtension: 'js', main: 'index' },
+        'angular2-modal/plugins/vex': { defaultExtension: 'js', main: 'index' }
         // 'immutable': {
         //     main: 'immutable.js',
         //     defaultExtension: 'js'

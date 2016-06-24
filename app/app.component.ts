@@ -1,5 +1,5 @@
 // ng2
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { HTTP_PROVIDERS, XHRBackend } from '@angular/http';
 
@@ -11,17 +11,20 @@ import { CategoryData }   from './api/category-data';
 import { NavComponent } from './shared/nav/nav.component';
 import { FootComponent } from './shared/foot/foot.component';
 
+import {Modal, BS_MODAL_PROVIDERS} from 'angular2-modal/plugins/bootstrap';
+
+
 @Component({
     selector: 'app',
     templateUrl: 'app/app.component.html',
     styleUrls: ['app/app.component.css'],
     directives: [
         // ng2
-        ROUTER_DIRECTIVES,   
-             
-         // my components
-         NavComponent,
-         FootComponent       
+        ROUTER_DIRECTIVES,
+
+        // my components
+        NavComponent,
+        FootComponent
     ],
     providers: [
         // ng2
@@ -29,9 +32,12 @@ import { FootComponent } from './shared/foot/foot.component';
 
         // ng2 in memory web api
         { provide: XHRBackend, useClass: InMemoryBackendService },
-        { provide: SEED_DATA, useClass: CategoryData }        
-    ]
+        { provide: SEED_DATA, useClass: CategoryData }
+    ],
+    viewProviders: [BS_MODAL_PROVIDERS ]
 })
 export class AppComponent {
-   
+    constructor(public modal: Modal, viewContainer: ViewContainerRef) {
+        modal.defaultViewContainer = viewContainer;
+    }
 }
