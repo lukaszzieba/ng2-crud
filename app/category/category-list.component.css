@@ -1,0 +1,20 @@
+#head {
+    margin-left: 16px;
+}
+md-card {
+    width: 45%;
+    box-sizing: border-box;
+    margin: 16px;
+    cursor: pointer;     
+}
+
+.card-container {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+@media  (max-width: 1100px) {
+     md-card {
+         width: 100%;
+     }
+  }

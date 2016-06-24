@@ -1,0 +1,10 @@
+// Folders
+node_modules
+typings
+dist
+
+// File extension
+app/*.js
+app/*.js.map
+app/**/*.js
+app/**/*.js.map

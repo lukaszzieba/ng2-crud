@@ -1,0 +1,8 @@
+.clear-fix {
+    clear: both;
+}
+
+.col {
+    float: left;
+    width: 50%;
+}
