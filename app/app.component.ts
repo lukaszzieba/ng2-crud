@@ -11,9 +11,6 @@ import { CategoryData }   from './api/category-data';
 import { NavComponent } from './shared/nav/nav.component';
 import { FootComponent } from './shared/foot/foot.component';
 
-import {Modal, BS_MODAL_PROVIDERS} from 'angular2-modal/plugins/bootstrap';
-
-
 @Component({
     selector: 'app',
     templateUrl: 'app/app.component.html',
@@ -34,10 +31,9 @@ import {Modal, BS_MODAL_PROVIDERS} from 'angular2-modal/plugins/bootstrap';
         { provide: XHRBackend, useClass: InMemoryBackendService },
         { provide: SEED_DATA, useClass: CategoryData }
     ],
-    viewProviders: [BS_MODAL_PROVIDERS ]
+    viewProviders: [ ]
 })
 export class AppComponent {
-    constructor(public modal: Modal, viewContainer: ViewContainerRef) {
-        modal.defaultViewContainer = viewContainer;
+    constructor() {        
     }
 }

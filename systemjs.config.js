@@ -12,7 +12,8 @@
         'rxjs': 'node_modules/rxjs',
         'angular2-modal': 'node_modules/angular2-modal',
         'angular2-modal/platform-browser': 'node_modules/angular2-modal/platform-browser',
-        'angular2-modal/package.json': 'node_modules/angular2-modal/package.json'
+        'angular2-modal/package.json': 'node_modules/angular2-modal/package.json',
+        'ng2-toastr': 'node_modules/ng2-toastr'
         // 'immutable': 'node_modules/immutable/dist'
     };
 
@@ -30,9 +31,10 @@
             defaultExtension: 'js'
         },
         'angular2-modal': { defaultExtension: 'js', main: 'index' },
-        'angular2-modal/platform-browser' : { defaultExtension: 'js', main: 'index' },
+        'angular2-modal/platform-browser': { defaultExtension: 'js', main: 'index' },
         'angular2-modal/plugins/bootstrap': { defaultExtension: 'js', main: 'index' },
-        'angular2-modal/plugins/vex': { defaultExtension: 'js', main: 'index' }
+        'angular2-modal/plugins/vex': { defaultExtension: 'js', main: 'index' },
+        'ng2-toastr' : { defaultExtension: 'js', main: 'index' }
         // 'immutable': {
         //     main: 'immutable.js',
         //     defaultExtension: 'js'

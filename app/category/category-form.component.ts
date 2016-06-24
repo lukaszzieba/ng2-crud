@@ -6,13 +6,15 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Category, CategoryService } from './category.service';
 import { CategoryStore } from './category.store';
 
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
     selector: 'category-form',
     templateUrl: './app/category/category-form.component.html',
     providers: [
         CategoryService,
-        CategoryStore
+        CategoryStore,
+        ToastsManager
     ]
 })
 export class CategoryFormComponent implements OnInit {
@@ -24,6 +26,7 @@ export class CategoryFormComponent implements OnInit {
     editMode: boolean = false;
 
     constructor(
+        public _toastsManager : ToastsManager,
         private _categoryService: CategoryService,
         private _activatedRoute: ActivatedRoute,
         private _router: Router,
@@ -37,13 +40,12 @@ export class CategoryFormComponent implements OnInit {
         this.category.ordering = 5;
         // this._categoryService.addCategory(this.category);
         this._categoryStore.addCategory(this.category);
-        this._goBack();
+        this._goBack();         
+        this._toastsManager.success('Add category complete!', 'Success!');      
     }
 
     cancel() {
-        // this._goBack();
-         
-        $("#confirmDialog").modal("show");
+        this._goBack();  
     }
 
     delete() {
