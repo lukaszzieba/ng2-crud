@@ -1,40 +1,41 @@
-<h2>Create new category</h2>
-<form>
-  <div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" class="form-control" [(ngModel)]="category.name" id="name" placeholder="Nazwa">
+<div class="form">
+  <md-card>
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Create category</span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-caontent>
+      <div>
+        <md-input placeholder="Name" [(ngModel)]="category.name"></md-input>
+        <md-input placeholder="Descripton" [(ngModel)]="category.description"></md-input>        
+          <div flex-xs="100" flex="50">
+            <md-checkbox (change)="cbChange($event)" [checked]="category.is_visible" aria-label="Checkbox 1">
+              Visible
+            </md-checkbox>
+          </div>
+      </div>
+    </md-card-caontent>
+    <md-card-actions align="end">
+      <button *ngIf="!editMode" type="button" (click)="add()" md-raised-button class="md-raised-button md-primary">Add</button>
+      <button *ngIf="editMode" type="button" (click)="save()" md-raised-button class="md-raised-button md-primary">Save</button>
+      <button *ngIf="editMode" type=" button " (click)="cancel() " md-raised-button>Cancel</button>
+      <button *ngIf="editMode" type="button" (click)="confirm.show()" md-raised-button class="md-raised-button md-warn">Delete</button>
+    </md-card-actions>
+  </md-card>
   </div>
-  <div class="form-group">
-    <label for="description">Description</label>
-    <input type="text" class="form-control" [(ngModel)]="category.description" id="description" placeholder="Opis">
-  </div>
-  <div class="checkbox">
-    <label>
-      <input checked   [(ngModel)]="category.is_visible"  type="checkbox"> Visible
-    </label>
-  </div>
-  <button *ngIf="!editMode" type="button" (click)="add()" class="btn btn-primary">Add</button>
-  <button *ngIf="editMode" type="button" (click)="save()" class="btn btn-success">Save</button>
-  <button *ngIf="editMode" type=" button " (click)="cancel() " class="btn btn-warning ">Cancel</button>
-  <button *ngIf="editMode" type="button" (click)="delete()" class="btn btn-danger">Delete</button>
-</form>
 
-<div id="confirmDialog" class="modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-        <h4>Confirm</h4>
-      </div>
-      <div class="modal-body">
-        <!--Are you sure to {{ammount}} {{$ctrl.cur.Code}} buy for {{toPay | currency : ''}}??-->
-      </div>
-      <div class="modal-footer">
-        <button  type="button" name="button" class="btn btn-primary">Buy</button>
-        <button  type="button" name="button" class="btn btn-primary">Cancel</button>
-      </div>
-    </div>
-  </div>
-</div>
+  <md-dialog #confirm (onClose)="confirmClose($event)">
+            <md-dialog-title>Confirm delete</md-dialog-title>
+            Are you sure to delete this element
+            <md-dialog-actions>
+               
+                <span flex></span>
+                <button md-button (click)="confirm.close(true)">
+      <span>Yes</span>
+    </button>
+                <button md-button class="md-primary" (click)="confirm.close(false)">
+      <span>Cancel</span>
+    </button>
+            </md-dialog-actions>
+        </md-dialog>

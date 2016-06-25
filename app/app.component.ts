@@ -22,6 +22,7 @@ import { FootComponent } from './shared/foot/foot.component';
         // my components
         NavComponent,
         FootComponent
+          
     ],
     providers: [
         // ng2
