@@ -9,8 +9,18 @@
         'app': 'app', // 'dist',
         '@angular': 'node_modules/@angular',
         'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
-        'rxjs': 'node_modules/rxjs'  
-        // 'immutable': 'node_modules/immutable/dist'
+        'rxjs': 'node_modules/rxjs',
+        'ng2-toastr': 'node_modules/ng2-toastr',
+        '@angular2-material/core': 'node_modules/@angular2-material/core',
+        '@angular2-material/button': 'node_modules/@angular2-material/button',
+        '@angular2-material/card': 'node_modules/@angular2-material/card',
+        '@angular2-material/toolbar': 'node_modules/@angular2-material/toolbar',
+        '@angular2-material/icon': 'node_modules/@angular2-material/icon',
+        '@angular2-material/sidenav': 'node_modules/@angular2-material/sidenav',
+        '@angular2-material/list': 'node_modules/@angular2-material/list',
+        '@angular2-material/input': 'node_modules/@angular2-material/input',
+        '@angular2-material/checkbox': 'node_modules/@angular2-material/checkbox',
+        'ng2-material': 'node_modules/ng2-material'       
     };
 
     // packages tells the System loader how to load when no filename and/or no extension
@@ -25,11 +35,52 @@
         'angular2-in-memory-web-api': {
             main: 'index.js',
             defaultExtension: 'js'
-        }    
-        // 'immutable': {
-        //     main: 'immutable.js',
-        //     defaultExtension: 'js'
-        // }
+        },
+       '@angular2-material/core': {
+            main: 'core.js',
+            defaultExtension: 'js'
+        },
+        '@angular2-material/button': {
+            main: 'button.js',
+            defaultExtension: 'js'
+        },
+        '@angular2-material/card': {
+            main: 'card.js',
+            defaultExtension: 'js'
+        },
+        '@angular2-material/toolbar': {
+            main: 'toolbar.js',
+            defaultExtension: 'js'
+        },
+        '@angular2-material/icon': {
+            main: 'icon.js',
+            defaultExtension: 'js'
+        },
+        '@angular2-material/sidenav': {
+            main: 'sidenav.js',
+            defaultExtension: 'js'
+        },
+        '@angular2-material/list': {
+            main: 'list.js',
+            defaultExtension: 'js'
+        },
+        '@angular2-material/input': {
+            main: 'input.js',
+            defaultExtension: 'js'
+        },
+         '@angular2-material/checkbox': {
+            main: 'checkbox.js',
+            defaultExtension: 'js'
+        },
+        '@angular2-material/grid-list': {
+            main: 'grid-list.js',
+            defaultExtension: 'js'
+        },
+        'ng2-material': {
+            main: 'index.js',
+            defaultExtension: 'js'
+        },
+        'ng2-toastr': { defaultExtension: 'js', main: 'index' }        
     };
 
     var ngPackageNames = [

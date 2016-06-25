@@ -30,8 +30,8 @@ export class CategoryService {
 
     getRootCategory() {
         return this._http.get(rootCategory)
-            .map((response: Response) => response.json().data)
-            // .catch(this.errorHandler);
+        // .map((response: Response) => response.json().data)
+        // .catch(this.errorHandler);
     }
 
     addCategory(category: Category) {
@@ -39,25 +39,36 @@ export class CategoryService {
         // this._spinnerService.show();
         return this._http
             .post(`${categoriesUrl}`, body)
-            .map(res => {
-                res.json().data
-            })
+        // .map(res => {
+        //     res.json().data
+        // })
         //.catch(this.errorHandler);
     }
 
     getCategoryById(id: number) {
         let url = categoriesUrl + '/' + id;
         return this._http.get(url)
-            .map((response: Response) =>  response.json().data);
+            .map((response: Response) => response.json().data);
         // .catch(this.errorHandler);
     }
 
     getCategoryByParentId(parent_id: number) {
         let url = categoriesUrl + '/?parent_id=' + parent_id;
-        console.log(url);
+        // console.log(url);
         return this._http.get(url)
-            .map((response: Response) => <Category[]>response.json().data)
+        // .map((response: Response) => <Category[]>response.json().data)
         // .catch(this.errorHandler);
+    }
+
+    deleteCategory(id: number) {
+        let url = categoriesUrl + '/' + id;
+        return this._http.delete(url);
+    }
+
+    updateCategory(category: Category) {
+        let url = categoriesUrl + '/' + category.id
+        let body = JSON.stringify(category);
+        return this._http.put(url, body);
     }
 
     errorHandler(error: Response) {

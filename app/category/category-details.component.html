@@ -1,23 +1,18 @@
-<h2>Category details</h2>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">{{category.name}}</h3>
-    </div>
-    <div class="panel-body">
-        {{category.description}}
-    </div>
-    <div class="panel-footer">
-        <button class="btn btn-primary">Edit</button>
-    </div>
-</div>
-<div class="col-md-6">
+<md-card>
+    <md-card-title>
+        <md-card-title-text>
+            <span class="md-headline">{{category.name}}</span>
+        </md-card-title-text>
+    </md-card-title>
+    <md-card-content class="secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</md-card-content>
+    <md-card-actions *ngIf="!noEdit">
+        <button (click)="goToEdit()"  md-raised-button class="md-raised md-primary" >Edit</button>
+    </md-card-actions>
+</md-card>
+<div class="col">
     <h2>Sub</h2>
-    <div *ngFor="let cat of subCategories">
-        {{cat | json}}
-    </div>
+    <category-list></category-list>
 </div>
-<div class="col-md-6">
+<div class="col">
     <h2>products</h2>
 </div>
-
-

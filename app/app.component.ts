@@ -1,5 +1,5 @@
 // ng2
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { HTTP_PROVIDERS, XHRBackend } from '@angular/http';
 
@@ -17,11 +17,12 @@ import { FootComponent } from './shared/foot/foot.component';
     styleUrls: ['app/app.component.css'],
     directives: [
         // ng2
-        ROUTER_DIRECTIVES,   
-             
-         // my components
-         NavComponent,
-         FootComponent       
+        ROUTER_DIRECTIVES,
+
+        // my components
+        NavComponent,
+        FootComponent
+          
     ],
     providers: [
         // ng2
@@ -29,9 +30,11 @@ import { FootComponent } from './shared/foot/foot.component';
 
         // ng2 in memory web api
         { provide: XHRBackend, useClass: InMemoryBackendService },
-        { provide: SEED_DATA, useClass: CategoryData }        
-    ]
+        { provide: SEED_DATA, useClass: CategoryData }
+    ],
+    viewProviders: [ ]
 })
 export class AppComponent {
-   
+    constructor() {        
+    }
 }
