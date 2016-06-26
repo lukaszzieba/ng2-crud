@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
 // rxjs
-import { Observable } from 'rxjs/Observable';
+import { Subject, Observable, BehaviorSubject } from 'rxjs/Rx';
+
 
 // my componets
 import { CONFIG } from '../shared/config';
@@ -22,27 +23,42 @@ export interface Category {
 
 @Injectable()
 export class CategoryService {
-    constructor(private _http: Http) { }
+
+    private _categories$: Subject<Category[]>;
+    private _dataStore: {  // This is where we will store our data in memory
+        categories: Category[]
+    };
+
+    constructor(private _http: Http) {
+        this._categories$ = new Subject<Category[]>();
+        this._dataStore = { categories: [] };
+    }
+
+    get categories$() {
+        return this._categories$.asObservable();
+    }
 
     getRootCategoryId() {
         return rootCategoryId;
     }
 
     getRootCategory() {
-        return this._http.get(rootCategory)
-        // .map((response: Response) => response.json().data)
-        // .catch(this.errorHandler);
+        this._http.get(rootCategory)
+            .map((res: Response) => res.json().data)
+            .subscribe(data => {
+                this._dataStore.categories = data;
+                this._categories$.next(this._dataStore.categories);
+            });           
     }
 
     addCategory(category: Category) {
-        let body = JSON.stringify(category);
-        // this._spinnerService.show();
-        return this._http
-            .post(`${categoriesUrl}`, body)
-        // .map(res => {
-        //     res.json().data
-        // })
-        //.catch(this.errorHandler);
+        let body = JSON.stringify(category);       
+        return this._http .post(`${categoriesUrl}`, body)
+        .map((res : Response) => res.json().data)
+        .subscribe(data => {
+            this._dataStore.categories.push(data);
+            this._categories$.next(this._dataStore.categories);
+        });
     }
 
     getCategoryById(id: number) {

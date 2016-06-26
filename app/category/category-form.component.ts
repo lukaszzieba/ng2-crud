@@ -1,10 +1,10 @@
 // ng2
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 
 // my components
 import { Category, CategoryService } from './category.service';
-import { CategoryStore } from './category.store';
+// import { CategoryStore } from './category.store';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
@@ -19,62 +19,57 @@ import {MdCheckbox} from '@angular2-material/checkbox';
     directives: [MATERIAL_DIRECTIVES, MD_INPUT_DIRECTIVES, MdCheckbox],
     providers: [
         CategoryService,
-        CategoryStore,
         ToastsManager,
         MATERIAL_PROVIDERS
     ]
 })
 export class CategoryFormComponent implements OnInit {
 
+    category: Category;
+    @Output() addCategory = new EventEmitter()
+
     categoryId: number;
     parentId: number;
-    category: Category;
-
     editMode: boolean = false;
 
     constructor(
         public _toastsManager: ToastsManager,
         private _categoryService: CategoryService,
         private _activatedRoute: ActivatedRoute,
-        private _router: Router,
-        private _categoryStore: CategoryStore) {
+        private _router: Router) {
         this.category = <Category>{}
         this.category.is_visible = true;
     }
 
     cbChange(e) {
-        console.log(e);
-        this.category.is_visible = e.checked;
+        // console.log(e);
+        // this.category.is_visible = e.checked;
     }
 
     add() {
-        this.parentId ? this.category.parent_id = this.parentId : this.category.parent_id = this._categoryService.getRootCategoryId();
-        this.category.ordering = 5;
-        // this._categoryService.addCategory(this.category);
-        this._categoryStore.addCategory(this.category);
-        this._goBack();
+        this.addCategory.emit(this.category);
         this._toastsManager.success('Add category complete!', 'Success!');
     }
 
     cancel() {
-        this._goBack();
-    }   
-
-    delete() {
-        this._categoryStore.deleteCategory(this.category.id);
-        this._goBack();
+        // this._goBack();
     }
 
-     confirmClose($event) {
-        if ($event) {
-            this.delete();
-        }
-        console.log($event);
+    delete() {
+        // this._categoryStore.deleteCategory(this.category.id);
+        // this._goBack();
+    }
+
+    confirmClose($event) {
+        // if ($event) {
+        //     this.delete();
+        // }
+        // console.log($event);
     }
 
     save() {
-        this._categoryStore.update(this.category);
-        this._goBack();
+        // this._categoryStore.update(this.category);
+        // this._goBack();
     }
 
     ngOnInit() {
