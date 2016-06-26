@@ -1,0 +1,16 @@
+[md-fab] {
+    width: 35px;
+    height: 35px;
+}
+
+[md-fab] i, [md-fab] md-icon {
+    padding: 5px;
+}
+.button label {
+    padding-left: 10px;
+}
+
+.fab-label {
+    margin-top: 10px;
+    margin-left: 5px;
+}

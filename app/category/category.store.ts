@@ -23,7 +23,7 @@ export class CategoryStore {
     load() {
         let id: number;
         this._activatedRoute.params.subscribe(params => {
-            id = +params['id'];
+            id = +params['id'];            
             if (id) {
                 this._categoryService.getCategoryByParentId(id)
                     .subscribe(res => {
