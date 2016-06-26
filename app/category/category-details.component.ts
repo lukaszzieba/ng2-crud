@@ -7,14 +7,17 @@ import { Observable } from 'rxjs/Observable';
 import { Category, CategoryService } from './category.service';
 import { CategoryStore } from './category.store';
 // import { SpinerComponent } from '../shared/spiner.component';
+
 import { CategoryListComponent } from './category-list.component';
+import { ProductListComponent } from '../product/product-list.component';
 
 @Component({
     selector: 'category-details',
     templateUrl: 'app/category/category-details.component.html',
     styleUrls: ['app/category/category-details.component.css'],
     directives: [        
-        CategoryListComponent
+        CategoryListComponent,
+        ProductListComponent
     ],
     providers: [
         CategoryService,
@@ -38,8 +41,7 @@ export class CategoryDetailsComponent implements OnInit {
         this.category = <Category>{};
         this._categoryService.getCategoryById(id)
             .subscribe((category) => {
-                this.category = category
-                console.log(this.category);
+                this.category = category                
             });
     }
 

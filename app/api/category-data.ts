@@ -115,6 +115,30 @@ export class CategoryData {
             }
         ];
 
-        return { categories };
+        let products = [
+            {
+                id: 1,
+                category_id: 16,
+                name: 'galoty',
+                description: 'galoty robocze',
+                price: 199
+            },
+             {
+                id: 2,
+                category_id: 16,
+                name: 'asd',
+                description: 'asd robocze',
+                price: 199
+            },
+             {
+                id: 3,
+                category_id: 16,
+                name: 'zxc',
+                description: 'zxc codzinne',
+                price: 199
+            }
+        ]
+
+        return { categories, products };
     }
 }
