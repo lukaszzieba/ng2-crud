@@ -48,32 +48,34 @@ export class CategoryService {
             .subscribe(data => {
                 this._dataStore.categories = data;
                 this._categories$.next(this._dataStore.categories);
-            });           
+            });
     }
 
     addCategory(category: Category) {
-        let body = JSON.stringify(category);       
-        return this._http .post(`${categoriesUrl}`, body)
-        .map((res : Response) => res.json().data)
-        .subscribe(data => {
-            this._dataStore.categories.push(data);
-            this._categories$.next(this._dataStore.categories);
-        });
+        let body = JSON.stringify(category);
+        return this._http.post(`${categoriesUrl}`, body)
+            .map((res: Response) => res.json().data)
+            .subscribe(data => {
+                this._dataStore.categories.push(data);
+                this._categories$.next(this._dataStore.categories);
+            });
     }
 
     getCategoryById(id: number) {
         let url = categoriesUrl + '/' + id;
         return this._http.get(url)
-            .map((response: Response) => response.json().data);
-        // .catch(this.errorHandler);
+            .map((res: Response) => res.json().data);
+
     }
 
     getCategoryByParentId(parent_id: number) {
         let url = categoriesUrl + '/?parent_id=' + parent_id;
-        // console.log(url);
-        return this._http.get(url)
-        // .map((response: Response) => <Category[]>response.json().data)
-        // .catch(this.errorHandler);
+        this._http.get(url)
+            .map((res: Response) => res.json().data)
+            .subscribe(data => {
+                this._dataStore.categories = data;
+                this._categories$.next(this._dataStore.categories);
+            })
     }
 
     deleteCategory(id: number) {

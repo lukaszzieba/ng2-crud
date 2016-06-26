@@ -36,28 +36,34 @@ export class CategoryListComponent implements OnInit {
     addCategory(category : Category) {
         this._categoryService.addCategory(category);
         this.showForm = false;
-    }
-
-    goToCategoryForm(id: number) {
-        this._activatedRoute.params.subscribe(params => {
-            let paramId = + params['id'];
-            console.log('Para id' + paramId);
-            if (id) {
-                this._router.navigate(['/category', id])
-            } else if (paramId) {
-                this._router.navigate(['/category/parent/', paramId])
-            }
-            else {
-                this._router.navigate(['/category', 'new'])
-            }
-        });
-    }
+    }    
 
     goToCategoryDetails(categoryId: number) {
         this._router.navigate(['/details', categoryId])
     }
 
     ngOnInit() {
-        this._categoryService.getRootCategory(); 
+        this._activatedRoute.params.subscribe(params => {           
+            let id = !params['id'] ? this._categoryService.getRootCategoryId() : params['id'];
+            this._categoryService.getCategoryByParentId(id); 
+        });
+        
     }
+
+
+
+    // goToCategoryForm(id: number) {
+    //     this._activatedRoute.params.subscribe(params => {
+    //         let paramId = + params['id'];
+    //         console.log('Para id' + paramId);
+    //         if (id) {
+    //             this._router.navigate(['/category', id])
+    //         } else if (paramId) {
+    //             this._router.navigate(['/category/parent/', paramId])
+    //         }
+    //         else {
+    //             this._router.navigate(['/category', 'new'])
+    //         }
+    //     });
+    // }
 }
