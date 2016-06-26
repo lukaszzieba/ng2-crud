@@ -7,14 +7,19 @@ import { CategoryFormComponent } from './category/category-form.component';
 import { CategoryListComponent } from './category/category-list.component';
 import { CategoryDetailsComponent } from './category/category-details.component';
 
+import { ProductFormComponent } from './product/product-form.component';
+
 
 export const routes: RouterConfig = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
-  // { path: 'dashboard', component: DashboardComponent },
+ 
   { path: 'categories', component: CategoryListComponent },
   { path: 'category/:id', component: CategoryFormComponent },
   { path: 'category/parent/:parentId', component: CategoryFormComponent },
+
+  { path: 'product/parent/:parentId', component: ProductFormComponent },
+
   { path: 'details/:id', component: CategoryDetailsComponent }
 ];
 
