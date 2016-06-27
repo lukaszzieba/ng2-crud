@@ -2,7 +2,27 @@
     clear: both;
 }
 
+/*.col:first {
+    float: left;
+    width: 45%;
+    padding: 10px;    
+}*/
+
+.col:first {
+    float: left;
+    width: 47%;
+    padding: 10px;     
+}
+
 .col {
     float: left;
-    width: 50%;
+    width: 47%;
+    padding: 10px; 
+    margin-left: 10px;
 }
+
+@media  (max-width: 1400px) {
+     .col {
+         width: 100%;
+     }
+  }

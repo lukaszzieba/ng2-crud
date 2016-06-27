@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/Observable';
 
 // my components
 import { Category, CategoryService } from './category.service';
-import { CategoryStore } from './category.store';
 // import { SpinerComponent } from '../shared/spiner.component';
 
 import { CategoryListComponent } from './category-list.component';
@@ -20,22 +19,20 @@ import { ProductListComponent } from '../product/product-list.component';
         ProductListComponent
     ],
     providers: [
-        CategoryService,
-        CategoryStore
+        CategoryService        
     ]
 })
 export class CategoryDetailsComponent implements OnInit {
 
     formShowing: boolean = false;
-    category: Category;
-    subCategories: Category[] = [];
+    category: Category;    
 
     constructor(
         private _categoryService: CategoryService,
         private _router: Router,
-        private _activatedRoute: ActivatedRoute,
-        private _categoryStore: CategoryStore
-    ) { }
+        private _activatedRoute: ActivatedRoute) {
+        this.category = <Category>{};        
+     }
 
     getCategoryById(id: number) {
         this.category = <Category>{};
@@ -43,29 +40,13 @@ export class CategoryDetailsComponent implements OnInit {
             .subscribe((category) => {
                 this.category = category                
             });
-    }
-
-    goToEdit() {
-         if (this.category.id) {
-                this._router.navigate(['/category', this.category.id]);
-         }
-    }
-
-    getSubCategories(parent_id: number) {
-        // this._categoryService.getCategoryByParentId(parent_id)
-        //     .subscribe((subCategories: Category[]) => {
-        //         this.subCategories = subCategories;
-        //         // log  sub categories
-        //         console.log(this.subCategories);
-        //     });
-    }
+    }   
 
     ngOnInit() {
         this._activatedRoute.params.subscribe(params => {
             let id = +params['id'];
             if (id) {
-                this.getCategoryById(id);
-                // this.getSubCategories(id)
+                this.getCategoryById(id);                          
             }
         });
     }

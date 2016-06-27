@@ -2,36 +2,98 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
+// rxjs
+import { Observable } from 'rxjs/Observable';
+
+// ng2 material
+import {MATERIAL_DIRECTIVES, MATERIAL_PROVIDERS} from 'ng2-material';
+
 // my components
 import { Product, ProductService } from './product.service';
+import { ProductFormComponent } from './product-form.component';
 
 @Component({
     selector: 'product-list',
     templateUrl: './app/product/product-list.component.html',
-    providers: [ProductService]
+    styleUrls: ['./app/product/product-list.component.css'],
+    directives: [
+        ProductFormComponent,
+        MATERIAL_DIRECTIVES
+    ],
+    providers: [
+        ProductService,
+        MATERIAL_PROVIDERS
+    ]
+
 })
 export class ProductListComponent implements OnInit {
 
-    products: Product[];
+    products: Observable<Product[]>;
+    parentId: number;
+    showForm: boolean;
+
+    productToEdit: Product;
+    productIdToDelete: number;
+    productsLength: number;
+
+    editMode: boolean = false;
 
     constructor(
         private _productService: ProductService,
         private _router: Router,
-        private _activatedRoute: ActivatedRoute) { }
+        private _activatedRoute: ActivatedRoute) {
+        this.products = this._productService.products$;
+        this.showForm = false;
+    }
 
-    goToProductForm() {
-        this._activatedRoute.params.subscribe(params => {
-            let parentId = + params['id'];
-            this._router.navigate(['/product/parent/', parentId]);
+    // add product
+    add(product: Product) {
+        this._productService.addProduct(product);
+        this.showForm = false;
+    }
+
+    // delete product  
+    setToDelete(id: number) {
+        this.productIdToDelete = id;
+    }
+
+    confirmClose($event: boolean) {
+        if ($event) {
+            this._productService.deleteProduct(this.productIdToDelete);
+        }
+    }
+
+    // edit product
+    editProduct(product: Product) {
+        this.productToEdit = product;
+        this.showForm = true;
+    }
+
+    save(updatedProduct: Product) {
+        this._productService.updateProduct(updatedProduct);
+        this.showForm = false;
+        this.productToEdit = null;
+    }
+
+    cancel() {
+        this.showForm = false;
+        this.productToEdit = null;
+    }
+
+    // init
+    ngOnInit() {
+        this._activatedRoute.url.subscribe(url => {
+            url.forEach((url, i) => {
+                if (url.path === 'dashboard') {
+                    this.editMode = true;
+                    return;
+                }
+            });
         });
 
+        this._activatedRoute.params.subscribe(params => {
+            this.parentId = + params['id'];
+            this._productService.getProducts(this.parentId);
+        });
     }
-
-    ngOnInit() {
-        this._productService.getProducts()
-            .subscribe(products => {
-                this.products = products;
-            })
-    }
-
 }

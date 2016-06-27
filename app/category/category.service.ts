@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
 // rxjs
-import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 // my componets
 import { CONFIG } from '../shared/config';
@@ -22,57 +22,85 @@ export interface Category {
 
 @Injectable()
 export class CategoryService {
-    constructor(private _http: Http) { }
+
+    private _categories$: Subject<Category[]>;
+    private _dataStore: {  // This is where we will store our data in memory
+        categories: Category[]
+    };
+
+    constructor(private _http: Http) {
+        this._categories$ = new Subject<Category[]>();
+        this._dataStore = { categories: [] };
+    }
+
+    get categories$() {
+        return this._categories$.asObservable();
+    }
 
     getRootCategoryId() {
         return rootCategoryId;
     }
 
     getRootCategory() {
-        return this._http.get(rootCategory)
-        // .map((response: Response) => response.json().data)
-        // .catch(this.errorHandler);
+        this._http.get(rootCategory)
+            .map((res: Response) => res.json().data)
+            .subscribe(data => {
+                this._dataStore.categories = data;
+                this._categories$.next(this._dataStore.categories);
+            });
     }
 
     addCategory(category: Category) {
         let body = JSON.stringify(category);
-        // this._spinnerService.show();
-        return this._http
-            .post(`${categoriesUrl}`, body)
-        // .map(res => {
-        //     res.json().data
-        // })
-        //.catch(this.errorHandler);
+        this._http.post(`${categoriesUrl}`, body)
+            .map((res: Response) => res.json().data)
+            .subscribe(data => {
+                console.log(data);                
+                this._dataStore.categories.push(data);
+                this._categories$.next(this._dataStore.categories);
+            });
     }
 
     getCategoryById(id: number) {
         let url = categoriesUrl + '/' + id;
         return this._http.get(url)
-            .map((response: Response) => response.json().data);
-        // .catch(this.errorHandler);
+            .map((res: Response) => res.json().data);
+
     }
 
     getCategoryByParentId(parent_id: number) {
         let url = categoriesUrl + '/?parent_id=' + parent_id;
-        // console.log(url);
-        return this._http.get(url)
-        // .map((response: Response) => <Category[]>response.json().data)
-        // .catch(this.errorHandler);
+        this._http.get(url)
+            .map((res: Response) => res.json().data)
+            .subscribe(data => {
+                this._dataStore.categories = data;
+                this._categories$.next(this._dataStore.categories);
+            })
     }
 
     deleteCategory(id: number) {
-        let url = categoriesUrl + '/' + id;
-        return this._http.delete(url);
+        this._http.delete(categoriesUrl + '/' + id)
+            .subscribe((res: Response) => {
+                this._dataStore.categories.forEach((c, i) => {
+                    if (c.id === id) {
+                        this._dataStore.categories.splice(i, 1);
+                    }
+                });
+            });
+        this._categories$.next(this._dataStore.categories);
     }
 
-    updateCategory(category: Category) {
-        let url = categoriesUrl + '/' + category.id
-        let body = JSON.stringify(category);
-        return this._http.put(url, body);
-    }
-
-    errorHandler(error: Response) {
-        console.log(error);
-        return Observable.throw(error.json().error || 'Servrr error');
-    }
+    updateCategory(updateCategory: Category) {
+        let body = JSON.stringify(updateCategory);
+        this._http.put(categoriesUrl + '/' + updateCategory.id, body)
+            .map((res: Response) => res.json().data)
+            .subscribe(data => {
+                this._dataStore.categories.forEach((c, i) => {
+                    if (c.id === updateCategory.id) {
+                        this._dataStore.categories[i] = data;
+                    }
+                });
+            });
+        this._categories$.next(this._dataStore.categories);
+    }   
 }
