@@ -1,5 +1,5 @@
 <h2>Categories</h2>
-<button (click)="showForm = !showForm" md-button md-no-ink class="md-primary">
+<button *ngIf="editMode" (click)="showForm = !showForm" md-button md-no-ink class="md-primary">
     <i class="material-icons">add</i> Add category
 </button>
 <category-form *ngIf="showForm" (addCategory)="addCategory($event)" (updateCategory)="save($event)" (cancelForm)="cancel($event)"
@@ -18,24 +18,36 @@
             <td>{{category.description}}</td>
             <td>
                 <div layout="row" layout-align="end center">
-                    <button md-fab class="md-primary" aria-label="Edit" (click)="goToCategoryDetails(category.id)">
+                    <button md-fab class="md-primary" aria-label="Details" (click)="goToCategoryDetails(category.id)">
                        <i class="material-icons">developer_board</i>
                     </button>
                     <label class="fab-label">Details</label>
-                    <button md-fab class="md-primary" aria-label="Edit" (click)="edit(category)">
+                    <button *ngIf="editMode" md-fab class="md-primary" aria-label="Edit" (click)="edit(category)">
                         <i class="material-icons">edit</i>
                     </button>
-                    <label class="fab-label">Edit</label>
+                    <label *ngIf="editMode" class="fab-label">Edit</label>
                     <!--</div>
                 <div layout="row">-->
-                    <button md-fab class="md-warn" aria-label="Delete" (click)=" confirm.show(); setToDelete(product.id)">
+                    <button *ngIf="editMode" md-fab class="md-warn" aria-label="Delete" (click)=" confirm.show(); setToDelete(category.id)">
                         <i class="material-icons">delete</i>
                     </button>
-                    <label class="fab-label">Delete</label>
+                    <label *ngIf="editMode" class="fab-label">Delete</label>
                 </div>
-                <!--<button md-raised-button class="md-raised" (click)="goToCategoryDetails(category.id)">Details</button>
-                <button md-raised-button class="md-raised md-primary" (click)="edit(category)">Edit</button>-->
             </td>
         </tr>
     </tbody>
 </md-data-table>
+
+<md-dialog #confirm (onClose)="confirmClose($event)">
+    <md-dialog-title>Confirm delete</md-dialog-title>
+    Are you sure to delete this element
+    <md-dialog-actions>
+        <span flex></span>
+        <button md-button (click)="confirm.close(true)">
+            <span>Yes</span>
+        </button>
+        <button md-button class="md-primary" (click)="confirm.close(false)">
+            <span>Cancel</span>
+        </button>
+    </md-dialog-actions>
+</md-dialog>

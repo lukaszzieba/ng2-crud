@@ -23,7 +23,7 @@ export class ProductService {
     private _products$: Subject<Product[]>;
     private _dataStore: {  // This is where we will store our data in memory
         products: Product[]
-    };
+    };    
 
     constructor(private _http: Http) {
         this._products$ = new Subject<Product[]>();
@@ -32,13 +32,13 @@ export class ProductService {
 
     get products$() {
         return this._products$.asObservable();
-    }
+    }   
 
     getProducts(parentId: number) {
         this._http.get(porductsUrl + '/?category_id=' + parentId)
             .map((res: Response) => res.json().data)
             .subscribe(data => {
-                this._dataStore.products = data;
+                this._dataStore.products = data;                
                 this._products$.next(this._dataStore.products);
             });
     }

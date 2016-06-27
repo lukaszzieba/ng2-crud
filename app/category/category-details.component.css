@@ -20,3 +20,9 @@
     padding: 10px; 
     margin-left: 10px;
 }
+
+@media  (max-width: 1400px) {
+     .col {
+         width: 100%;
+     }
+  }

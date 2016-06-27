@@ -34,6 +34,9 @@ export class ProductListComponent implements OnInit {
 
     productToEdit: Product;
     productIdToDelete: number;
+    productsLength: number;
+
+    editMode: boolean = false;
 
     constructor(
         private _productService: ProductService,
@@ -45,7 +48,6 @@ export class ProductListComponent implements OnInit {
 
     // add product
     add(product: Product) {
-        console.log(product);
         this._productService.addProduct(product);
         this.showForm = false;
     }
@@ -53,7 +55,6 @@ export class ProductListComponent implements OnInit {
     // delete product  
     setToDelete(id: number) {
         this.productIdToDelete = id;
-        console.log(this.productIdToDelete);
     }
 
     confirmClose($event: boolean) {
@@ -64,31 +65,35 @@ export class ProductListComponent implements OnInit {
 
     // edit product
     editProduct(product: Product) {
-        console.log(product);
         this.productToEdit = product;
         this.showForm = true;
     }
 
     save(updatedProduct: Product) {
-        console.log(updatedProduct);
         this._productService.updateProduct(updatedProduct);
         this.showForm = false;
         this.productToEdit = null;
     }
 
     cancel() {
-        console.log('asdzxc');
-        
         this.showForm = false;
         this.productToEdit = null;
     }
 
     // init
     ngOnInit() {
+        this._activatedRoute.url.subscribe(url => {
+            url.forEach((url, i) => {
+                if (url.path === 'dashboard') {
+                    this.editMode = true;
+                    return;
+                }
+            });
+        });
+
         this._activatedRoute.params.subscribe(params => {
             this.parentId = + params['id'];
             this._productService.getProducts(this.parentId);
         });
     }
-
 }

@@ -5,18 +5,25 @@ import { Router, ActivatedRoute } from '@angular/router';
 // rxjs
 import { Observable } from 'rxjs/Observable';
 
+// ng2 material
+import {MATERIAL_DIRECTIVES, MATERIAL_PROVIDERS} from 'ng2-material';
+
 // my components
 import { Category, CategoryService } from './category.service';
 import { CategoryFormComponent } from './category-form.component';
-// import { SpinerComponent } from '../shared/spiner.component';
-// import { CategoryStore } from './category.store';
 
 @Component({
     selector: 'category-list',
     templateUrl: 'app/category/category-list.component.html',
     styleUrls: ['app/category/category-list.component.css'],
-    directives: [CategoryFormComponent],
-    providers: [CategoryService]
+    directives: [
+        CategoryFormComponent,
+        MATERIAL_DIRECTIVES
+    ],
+    providers: [
+        CategoryService,
+        MATERIAL_PROVIDERS
+    ]
 })
 export class CategoryListComponent implements OnInit {
 
@@ -24,8 +31,9 @@ export class CategoryListComponent implements OnInit {
     categoryToUpdate: Category;
     showForm: boolean;
 
-    @Input() noEdit: boolean = false;
-    loading: boolean = true;
+    categoryIdToDelete: number;
+
+    editMode: boolean = false;
 
     constructor(private _categoryService: CategoryService,
         private _router: Router,
@@ -34,10 +42,36 @@ export class CategoryListComponent implements OnInit {
         this.showForm = false;
     }
 
+    // add category
     addCategory(category: Category) {
-        console.log(category);        
+        console.log(category);
         this._categoryService.addCategory(category);
         this.showForm = false;
+    }
+
+    // to delete category
+    setToDelete(id: number) {
+        this.categoryIdToDelete = id;
+        console.log(this.categoryIdToDelete);
+    }
+
+    confirmClose($event: boolean) {
+        if ($event) {
+            this._categoryService.deleteCategory(this.categoryIdToDelete);
+        }
+    }
+
+    // to edit
+    edit(category: Category) {
+        this.categoryToUpdate = category;
+        this.showForm = true;
+    }
+
+    save(updateCategory: Category) {
+        console.log(updateCategory);
+        this._categoryService.updateCategory(updateCategory);
+        this.showForm = false;
+        this.categoryToUpdate = null;
     }
 
     cancel(e: any) {
@@ -45,43 +79,27 @@ export class CategoryListComponent implements OnInit {
         this.categoryToUpdate = null;
     }
 
-    edit(category: Category) {
-        this.categoryToUpdate = category;
-        this.showForm = true;
-    }
-
-    save(updateCategory : Category) {
-        console.log(updateCategory);
-        this._categoryService.updateCategory(updateCategory);
-        this.showForm = false;
-        this.categoryToUpdate = null;        
-    }
-
+    // init
     ngOnInit() {
+        this._activatedRoute.url.subscribe(url => {
+            url.forEach((url, i) => {
+                if (url.path === 'dashboard') {
+                    this.editMode = true;
+                }
+            });
+        });
+
         this._activatedRoute.params.subscribe(params => {
             let id = !params['id'] ? this._categoryService.getRootCategoryId() : params['id'];
             this._categoryService.getCategoryByParentId(id);
         });
     }
 
-
     goToCategoryDetails(categoryId: number) {
-        this._router.navigate(['/details', categoryId])
-    }
-
-
-    // goToCategoryForm(id: number) {
-    //     this._activatedRoute.params.subscribe(params => {
-    //         let paramId = + params['id'];
-    //         console.log('Para id' + paramId);
-    //         if (id) {
-    //             this._router.navigate(['/category', id])
-    //         } else if (paramId) {
-    //             this._router.navigate(['/category/parent/', paramId])
-    //         }
-    //         else {
-    //             this._router.navigate(['/category', 'new'])
-    //         }
-    //     });
-    // }
+        if (this.editMode) {
+            this._router.navigate(['/dashboard/categoty/details/', categoryId])
+        } else {
+            this._router.navigate(['/categoty/details/', categoryId])
+        }
+    }  
 }

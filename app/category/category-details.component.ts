@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/Observable';
 
 // my components
 import { Category, CategoryService } from './category.service';
-import { CategoryStore } from './category.store';
 // import { SpinerComponent } from '../shared/spiner.component';
 
 import { CategoryListComponent } from './category-list.component';
@@ -26,15 +25,13 @@ import { ProductListComponent } from '../product/product-list.component';
 export class CategoryDetailsComponent implements OnInit {
 
     formShowing: boolean = false;
-    category: Category;
-    // subCategories: Observable<Category[]>;
+    category: Category;    
 
     constructor(
         private _categoryService: CategoryService,
         private _router: Router,
         private _activatedRoute: ActivatedRoute) {
-        this.category = <Category>{};
-        // this.subCategories = this._categoryService.categories$;
+        this.category = <Category>{};        
      }
 
     getCategoryById(id: number) {
@@ -43,12 +40,6 @@ export class CategoryDetailsComponent implements OnInit {
             .subscribe((category) => {
                 this.category = category                
             });
-    }
-
-    goToEdit() {
-         if (this.category.id) {
-                this._router.navigate(['/category', this.category.id]);
-         }
     }   
 
     ngOnInit() {
