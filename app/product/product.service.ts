@@ -2,8 +2,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
-import { Subject, Observable, BehaviorSubject } from 'rxjs/Rx';
-// import { Subject } from 'rxjs/Subject';
+// rxjs
+import { Subject } from 'rxjs/Subject';
 
 // my components
 import { CONFIG } from '../shared/config';

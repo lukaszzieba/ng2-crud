@@ -17,8 +17,24 @@
             <td class="md-text-cell">{{category.name}}</td>
             <td>{{category.description}}</td>
             <td>
-                <button md-raised-button class="md-raised" (click)="goToCategoryDetails(category.id)">Details</button>
-                <button md-raised-button class="md-raised md-primary" (click)="edit(category)">Edit</button>
+                <div layout="row" layout-align="end center">
+                    <button md-fab class="md-primary" aria-label="Edit" (click)="goToCategoryDetails(category.id)">
+                       <i class="material-icons">developer_board</i>
+                    </button>
+                    <label class="fab-label">Details</label>
+                    <button md-fab class="md-primary" aria-label="Edit" (click)="edit(category)">
+                        <i class="material-icons">edit</i>
+                    </button>
+                    <label class="fab-label">Edit</label>
+                    <!--</div>
+                <div layout="row">-->
+                    <button md-fab class="md-warn" aria-label="Delete" (click)=" confirm.show(); setToDelete(product.id)">
+                        <i class="material-icons">delete</i>
+                    </button>
+                    <label class="fab-label">Delete</label>
+                </div>
+                <!--<button md-raised-button class="md-raised" (click)="goToCategoryDetails(category.id)">Details</button>
+                <button md-raised-button class="md-raised md-primary" (click)="edit(category)">Edit</button>-->
             </td>
         </tr>
     </tbody>

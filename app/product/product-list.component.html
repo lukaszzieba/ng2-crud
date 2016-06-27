@@ -18,13 +18,13 @@
             <td>{{product.description}}</td>
             <td>{{product.price}}</td>
             <td>
-                <div layout="row">
+                <div layout="row" layout-align="end center">
                     <button md-fab class="md-primary" aria-label="Edit" (click)="editProduct(product)">
                         <i class="material-icons">edit</i>
                     </button>
                     <label class="fab-label">Edit</label>
-                </div>
-                <div layout="row">
+                <!--</div>
+                <div layout="row">-->
                     <button md-fab class="md-warn" aria-label="Delete" (click)=" confirm.show(); setToDelete(product.id)">
                         <i class="material-icons">delete</i>
                     </button>
