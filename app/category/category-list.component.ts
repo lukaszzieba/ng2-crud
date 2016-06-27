@@ -20,36 +20,54 @@ import { CategoryFormComponent } from './category-form.component';
 })
 export class CategoryListComponent implements OnInit {
 
-    categories : Observable<Category[]>;
-    showForm : boolean;
+    categories: Observable<Category[]>;
+    categoryToUpdate: Category;
+    showForm: boolean;
 
     @Input() noEdit: boolean = false;
     loading: boolean = true;
 
     constructor(private _categoryService: CategoryService,
-        private _router: Router,       
-        private _activatedRoute: ActivatedRoute) { 
+        private _router: Router,
+        private _activatedRoute: ActivatedRoute) {
         this.categories = this._categoryService.categories$;
         this.showForm = false;
     }
 
-    addCategory(category : Category) {
+    addCategory(category: Category) {
+        console.log(category);        
         this._categoryService.addCategory(category);
         this.showForm = false;
-    }    
+    }
+
+    cancel(e: any) {
+        this.showForm = false;
+        this.categoryToUpdate = null;
+    }
+
+    edit(category: Category) {
+        this.categoryToUpdate = category;
+        this.showForm = true;
+    }
+
+    save(updateCategory : Category) {
+        console.log(updateCategory);
+        this._categoryService.updateCategory(updateCategory);
+        this.showForm = false;
+        this.categoryToUpdate = null;        
+    }
+
+    ngOnInit() {
+        this._activatedRoute.params.subscribe(params => {
+            let id = !params['id'] ? this._categoryService.getRootCategoryId() : params['id'];
+            this._categoryService.getCategoryByParentId(id);
+        });
+    }
+
 
     goToCategoryDetails(categoryId: number) {
         this._router.navigate(['/details', categoryId])
     }
-
-    ngOnInit() {
-        this._activatedRoute.params.subscribe(params => {           
-            let id = !params['id'] ? this._categoryService.getRootCategoryId() : params['id'];
-            this._categoryService.getCategoryByParentId(id); 
-        });
-        
-    }
-
 
 
     // goToCategoryForm(id: number) {

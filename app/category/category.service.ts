@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
 // rxjs
-import { Subject, Observable, BehaviorSubject } from 'rxjs/Rx';
-
+import { Subject } from 'rxjs/Subject';
 
 // my componets
 import { CONFIG } from '../shared/config';
@@ -53,9 +52,10 @@ export class CategoryService {
 
     addCategory(category: Category) {
         let body = JSON.stringify(category);
-        return this._http.post(`${categoriesUrl}`, body)
+        this._http.post(`${categoriesUrl}`, body)
             .map((res: Response) => res.json().data)
             .subscribe(data => {
+                console.log(data);                
                 this._dataStore.categories.push(data);
                 this._categories$.next(this._dataStore.categories);
             });
@@ -79,18 +79,28 @@ export class CategoryService {
     }
 
     deleteCategory(id: number) {
-        let url = categoriesUrl + '/' + id;
-        return this._http.delete(url);
+        this._http.delete(categoriesUrl + '/' + id)
+            .subscribe((res: Response) => {
+                this._dataStore.categories.forEach((c, i) => {
+                    if (c.id === id) {
+                        this._dataStore.categories.splice(i, 1);
+                    }
+                });
+            });
+        this._categories$.next(this._dataStore.categories);
     }
 
-    updateCategory(category: Category) {
-        let url = categoriesUrl + '/' + category.id
-        let body = JSON.stringify(category);
-        return this._http.put(url, body);
-    }
-
-    errorHandler(error: Response) {
-        console.log(error);
-        return Observable.throw(error.json().error || 'Servrr error');
-    }
+    updateCategory(updateCategory: Category) {
+        let body = JSON.stringify(updateCategory);
+        this._http.put(categoriesUrl + '/' + updateCategory.id, body)
+            .map((res: Response) => res.json().data)
+            .subscribe(data => {
+                this._dataStore.categories.forEach((c, i) => {
+                    if (c.id === updateCategory.id) {
+                        this._dataStore.categories[i] = data;
+                    }
+                });
+            });
+        this._categories$.next(this._dataStore.categories);
+    }   
 }

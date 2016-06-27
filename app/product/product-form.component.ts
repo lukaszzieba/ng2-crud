@@ -40,15 +40,15 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     }
 
     add() {
-        this.addProduct.emit(this.product);        
+        this.addProduct.emit(this.product);
     }
 
     update() {
-        this.updateProduct.emit(this.product);      
+        this.updateProduct.emit(this.product);
     }
 
     cancel() {
-        this.cancelForm.emit({});        
+        this.cancelForm.emit({});
     }
 
     ngOnInit() {
@@ -64,7 +64,6 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        console.log('destrot');
         this.product = <Product>{};
         this.productToEdit = null;
     }

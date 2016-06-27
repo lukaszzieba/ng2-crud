@@ -1,9 +1,9 @@
 <h2>Categories</h2>
-<!--<button md-raised-button class="md-raised" (click)="goToCategoryForm()">Add new</button>-->
 <button (click)="showForm = !showForm" md-button md-no-ink class="md-primary">
     <i class="material-icons">add</i> Add category
 </button>
-<category-form *ngIf="showForm" (addCategory)="addCategory($event)"></category-form>
+<category-form *ngIf="showForm" (addCategory)="addCategory($event)" (updateCategory)="save($event)" (cancelForm)="cancel($event)"
+    [categoryToEdit]="categoryToUpdate"></category-form>
 <md-data-table layout-fill>
     <thead>
         <tr>
@@ -18,7 +18,7 @@
             <td>{{category.description}}</td>
             <td>
                 <button md-raised-button class="md-raised" (click)="goToCategoryDetails(category.id)">Details</button>
-                <button md-raised-button class="md-raised md-primary" (click)="goToCategoryForm(category.id)">Edit</button>
+                <button md-raised-button class="md-raised md-primary" (click)="edit(category)">Edit</button>
             </td>
         </tr>
     </tbody>
