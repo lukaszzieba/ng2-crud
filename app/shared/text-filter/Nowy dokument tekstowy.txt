@@ -1,0 +1,16 @@
+  filter(search: string) {
+        let response = <Category[]>[];
+        this._dataStore.categories.forEach((el, i) => {
+            if (el.name.includes(search)) {
+                response.push(el)
+            }
+        });
+        this._categories$.next(response);
+    }
+
+<div layout="row" layout-align="center center">
+    <button *ngIf="editMode" (click)="showForm = !showForm" md-button md-no-ink class="md-primary">
+        <i class="material-icons">add</i> Add category
+    </button>
+    <text-filter (changed)="filterChanged($event)"></text-filter>
+</div>

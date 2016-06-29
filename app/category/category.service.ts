@@ -37,9 +37,20 @@ export class CategoryService {
         return this._categories$.asObservable();
     }
 
+    filter(search: string) {
+        let response = <Category[]>[];
+        this._dataStore.categories.forEach((el, i) => {
+            if (el.name.includes(search)) {
+                response.push(el)
+            }
+        });
+        this._categories$.next(response);
+    }
+
     getRootCategoryId() {
         return rootCategoryId;
     }
+
 
     getRootCategory() {
         this._http.get(rootCategory)
@@ -55,7 +66,7 @@ export class CategoryService {
         this._http.post(`${categoriesUrl}`, body)
             .map((res: Response) => res.json().data)
             .subscribe(data => {
-                console.log(data);                
+                console.log(data);
                 this._dataStore.categories.push(data);
                 this._categories$.next(this._dataStore.categories);
             });
@@ -102,5 +113,5 @@ export class CategoryService {
                 });
             });
         this._categories$.next(this._dataStore.categories);
-    }   
+    }
 }

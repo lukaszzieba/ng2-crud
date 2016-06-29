@@ -1,7 +1,12 @@
 <h2>Categories</h2>
-<button *ngIf="editMode" (click)="showForm = !showForm" md-button md-no-ink class="md-primary">
-    <i class="material-icons">add</i> Add category
-</button>
+
+<div layout="row" layout-align="center center">
+    <button *ngIf="editMode" (click)="showForm = !showForm" md-button md-no-ink class="md-primary">
+        <i class="material-icons">add</i> Add category
+    </button>
+    <text-filter (changed)="filterChanged($event)"></text-filter>
+</div>
+
 <category-form *ngIf="showForm" (addCategory)="addCategory($event)" (updateCategory)="save($event)" (cancelForm)="cancel($event)"
     [categoryToEdit]="categoryToUpdate"></category-form>
 <md-data-table layout-fill>

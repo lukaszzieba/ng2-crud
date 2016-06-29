@@ -11,6 +11,7 @@ import {MATERIAL_DIRECTIVES, MATERIAL_PROVIDERS} from 'ng2-material';
 // my components
 import { Category, CategoryService } from './category.service';
 import { CategoryFormComponent } from './category-form.component';
+import { TextFilterComponent } from '../shared/text-filter/text-fliter.component'
 
 @Component({
     selector: 'category-list',
@@ -18,7 +19,8 @@ import { CategoryFormComponent } from './category-form.component';
     styleUrls: ['app/category/category-list.component.css'],
     directives: [
         CategoryFormComponent,
-        MATERIAL_DIRECTIVES
+        MATERIAL_DIRECTIVES,
+        TextFilterComponent
     ],
     providers: [
         CategoryService,
@@ -40,6 +42,10 @@ export class CategoryListComponent implements OnInit {
         private _activatedRoute: ActivatedRoute) {
         this.categories = this._categoryService.categories$;
         this.showForm = false;
+    }
+
+    filterChanged(search : string) {
+        this._categoryService.filter(search);
     }
 
     // add category
