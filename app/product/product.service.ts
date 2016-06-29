@@ -21,7 +21,7 @@ export interface Product {
 export class ProductService {
 
     private _products$: Subject<Product[]>;
-    private _dataStore: {  // This is where we will store our data in memory
+    private _dataStore: {
         products: Product[]
     };
 

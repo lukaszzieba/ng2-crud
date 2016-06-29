@@ -4,10 +4,10 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 
 // my components
 import { Category, CategoryService } from './category.service';
-// import { CategoryStore } from './category.store';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
+// ng2 material
 import {MATERIAL_DIRECTIVES, MATERIAL_PROVIDERS} from 'ng2-material';
 import {MD_INPUT_DIRECTIVES} from '@angular2-material/input';
 import {MdCheckbox} from '@angular2-material/checkbox';
@@ -67,9 +67,17 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
     cancel() {
         this.cancelForm.emit({});
     }
-  
 
     ngOnInit() {
+        this._setState();
+    }
+
+    ngOnDestroy() {
+        this.category = <Category>{};
+        this.categoryToEdit = null;
+    }
+
+    private _setState() {
         if (this.categoryToEdit) {
             this.category = this.categoryToEdit;
             this.editMode = true;
@@ -78,11 +86,4 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
             this.categoryId = params['id'] ? params['id'] : this._categoryService.getRootCategoryId();
         });
     }
-
-    ngOnDestroy() {
-        console.log('destroy');
-
-        this.category = <Category>{};
-        this.categoryToEdit = null;
-    }   
 }

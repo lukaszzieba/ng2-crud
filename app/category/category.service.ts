@@ -23,7 +23,7 @@ export interface Category {
 export class CategoryService {
 
     private _categories$: Subject<Category[]>;
-    private _dataStore: {  // This is where we will store our data in memory
+    private _dataStore: {
         categories: Category[]
     };
 

@@ -42,11 +42,6 @@ export class NavComponent implements OnInit {
             icon: 'shop_two',
             path: "['/categories']"
         }
-    ]
-
-    constructor(private _router: Router) {
-
-    }
-
+    ]   
     ngOnInit() { }
 }

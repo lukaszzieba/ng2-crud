@@ -12,14 +12,6 @@ import {OVERLAY_PROVIDERS} from '@angular2-material/core/overlay/overlay';
     directives: [MATERIAL_DIRECTIVES]
 })
 export class HomeComponent implements OnInit {  
-    ngOnInit() { }
-
-    close() {
-        console.log('asd');        
-    }
-
-    confirmClose(evt) {
-        console.log(evt);
-        
-    }
+    
+    ngOnInit() { }  
 }

@@ -85,7 +85,7 @@ export class CategoryListComponent implements OnInit {
         this.showForm = true;
     }
 
-    save(updateCategory: Category) {        
+    save(updateCategory: Category) {
         this._categoryService.updateCategory(updateCategory);
         this.showForm = false;
         this.categoryToUpdate = null;
@@ -98,18 +98,8 @@ export class CategoryListComponent implements OnInit {
 
     // init
     ngOnInit() {
-        this._activatedRoute.url.subscribe(url => {
-            url.forEach((url, i) => {
-                if (url.path === 'dashboard') {
-                    this.editMode = true;
-                }
-            });
-        });
-
-        this._activatedRoute.params.subscribe(params => {
-            let id = !params['id'] ? this._categoryService.getRootCategoryId() : params['id'];
-            this._categoryService.getCategoryByParentId(id);
-        });
+        this._checkSecureUrl();
+        this._getCategories();
     }
 
     goToCategoryDetails(categoryId: number) {
@@ -118,5 +108,22 @@ export class CategoryListComponent implements OnInit {
         } else {
             this._router.navigate(['/categoty/details/', categoryId])
         }
+    }
+
+    private _checkSecureUrl() {
+        this._activatedRoute.url.subscribe(url => {
+            url.forEach((url, i) => {
+                if (url.path === 'dashboard') {
+                    this.editMode = true;
+                }
+            });
+        });
+    }
+
+    private _getCategories() {
+        this._activatedRoute.params.subscribe(params => {
+            let id = !params['id'] ? this._categoryService.getRootCategoryId() : params['id'];
+            this._categoryService.getCategoryByParentId(id);
+        });
     }
 }

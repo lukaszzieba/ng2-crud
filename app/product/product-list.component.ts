@@ -70,11 +70,8 @@ export class ProductListComponent implements OnInit {
     }
 
     // edit product
-    editProduct(product: Product) {
-        // this.productToEdit = product;
-
+    editProduct(product: Product) { 
         let prod: Product = <Product>{};
-
         prod.id = product.id;
         prod.category_id = product.category_id;
         prod.name = product.name;
@@ -98,6 +95,11 @@ export class ProductListComponent implements OnInit {
 
     // init
     ngOnInit() {
+        this._checkSecureUrl();
+        this._getProducts();
+    }
+
+    private _checkSecureUrl() {
         this._activatedRoute.url.subscribe(url => {
             url.forEach((url, i) => {
                 if (url.path === 'dashboard') {
@@ -106,7 +108,9 @@ export class ProductListComponent implements OnInit {
                 }
             });
         });
+    }
 
+    private _getProducts() {
         this._activatedRoute.params.subscribe(params => {
             this.parentId = + params['id'];
             this._productService.getProducts(this.parentId);

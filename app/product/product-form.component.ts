@@ -5,7 +5,6 @@ import { ControlGroup, Control, FormBuilder, Validators} from '@angular/common';
 
 // my components
 import { Product } from './product.service';
-import { PriceValidators  } from '../shared/validators/price.validator';
 
 // ng2 material
 import {MATERIAL_DIRECTIVES, MATERIAL_PROVIDERS} from 'ng2-material';
@@ -35,7 +34,6 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     @Output() cancelForm = new EventEmitter();
 
     productForm: ControlGroup;
-
     cantBeNaN(control: Control) {
         if (parseFloat(control.value)) {
             return null
@@ -57,7 +55,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
             productPrice: ['', Validators.compose([
                 Validators.required,
                 this.cantBeNaN])]
-        })
+        });
     }
 
     add() {
@@ -73,7 +71,16 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        if (!this.productToEdit) {
+        this._setState();       
+    }
+
+    ngOnDestroy() {
+        this.product = <Product>{};
+        this.productToEdit = null;
+    }
+
+    private _setState() {
+         if (!this.productToEdit) {
             this._activatedRoute.params.subscribe(params => {
                 let parentId = + params['id'];
                 this.product.category_id = parentId;
@@ -82,10 +89,5 @@ export class ProductFormComponent implements OnInit, OnDestroy {
             this.product = this.productToEdit;
             this.editMode = true;
         }
-    }
-
-    ngOnDestroy() {
-        this.product = <Product>{};
-        this.productToEdit = null;
     }
 }
