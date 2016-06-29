@@ -9,29 +9,33 @@
         <tr>
             <th>Name</th>
             <th>Description</th>
+            <th *ngIf="editMode">Visiblility</th>
             <th>Actions</th>
         </tr>
     </thead>
-    <tbody>
-        <tr *ngFor="let category of categories | async">
+    <tbody *ngFor="let category of categories | async">
+        <tr *ngIf="category.is_visible || editMode">
             <td class="md-text-cell">{{category.name}}</td>
             <td>{{category.description}}</td>
+            <td *ngIf="editMode">{{category.is_visible}}</td>
             <td>
                 <div layout="row" layout-align="end center">
+
                     <button md-fab class="md-primary" aria-label="Details" (click)="goToCategoryDetails(category.id)">
                        <i class="material-icons">developer_board</i>
                     </button>
                     <label class="fab-label">Details</label>
+
                     <button *ngIf="editMode" md-fab class="md-primary" aria-label="Edit" (click)="edit(category)">
                         <i class="material-icons">edit</i>
                     </button>
                     <label *ngIf="editMode" class="fab-label">Edit</label>
-                    <!--</div>
-                <div layout="row">-->
+
                     <button *ngIf="editMode" md-fab class="md-warn" aria-label="Delete" (click)=" confirm.show(); setToDelete(category.id)">
                         <i class="material-icons">delete</i>
                     </button>
                     <label *ngIf="editMode" class="fab-label">Delete</label>
+
                 </div>
             </td>
         </tr>
