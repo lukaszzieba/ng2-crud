@@ -1,9 +1,15 @@
 <h2>Products</h2>
-<button *ngIf="editMode" (click)="showForm = !showForm" md-button md-no-ink class="md-primary">
-    <i class="material-icons">add</i> Add product
-</button>
+
+<div layout="row" layout-align="center center">
+    <button *ngIf="editMode" (click)="showForm = !showForm" md-button md-no-ink class="md-primary">
+        <i class="material-icons">add</i> Add product
+    </button>
+    <text-filter (changed)="filterChanged($event)"></text-filter>
+</div>
+
 <product-form (addProduct)="add($event)" (updateProduct)="save($event)" (cancelForm)="cancel($event)" [productToEdit]="productToEdit"
     *ngIf="showForm"></product-form>
+
 <md-data-table layout-fill>
     <thead>
         <tr>
@@ -20,13 +26,13 @@
             <td>{{product.price}}</td>
             <td>
                 <div layout="row" layout-align="end center">
-                    <button *ngIf="editMode"  md-fab class="md-primary" aria-label="Edit" (click)="editProduct(product)">
+                    <button *ngIf="editMode" md-fab class="md-primary" aria-label="Edit" (click)="editProduct(product)">
                         <i class="material-icons">edit</i>
                     </button>
-                    <label *ngIf="editMode"  class="fab-label">Edit</label>
+                    <label *ngIf="editMode" class="fab-label">Edit</label>
                     <!--</div>
                 <div layout="row">-->
-                    <button *ngIf="editMode"  md-fab class="md-warn" aria-label="Delete" (click)=" confirm.show(); setToDelete(product.id)">
+                    <button *ngIf="editMode" md-fab class="md-warn" aria-label="Delete" (click)=" confirm.show(); setToDelete(product.id)">
                         <i class="material-icons">delete</i>
                     </button>
                     <label *ngIf="editMode" class="fab-label">Delete</label>

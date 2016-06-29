@@ -11,6 +11,7 @@ import {MATERIAL_DIRECTIVES, MATERIAL_PROVIDERS} from 'ng2-material';
 // my components
 import { Product, ProductService } from './product.service';
 import { ProductFormComponent } from './product-form.component';
+import { TextFilterComponent } from '../shared/text-filter/text-fliter.component'
 
 @Component({
     selector: 'product-list',
@@ -18,7 +19,8 @@ import { ProductFormComponent } from './product-form.component';
     styleUrls: ['./app/product/product-list.component.css'],
     directives: [
         ProductFormComponent,
-        MATERIAL_DIRECTIVES
+        MATERIAL_DIRECTIVES,
+        TextFilterComponent
     ],
     providers: [
         ProductService,
@@ -44,6 +46,10 @@ export class ProductListComponent implements OnInit {
         private _activatedRoute: ActivatedRoute) {
         this.products = this._productService.products$;
         this.showForm = false;
+    }
+
+    filterChanged(search : string) {
+         this._productService.filter(search);
     }
 
     // add product

@@ -34,6 +34,16 @@ export class ProductService {
         return this._products$.asObservable();
     }   
 
+     filter(search: string) {
+        let response = <Product[]>[];
+        this._dataStore.products.forEach((el, i) => {
+            if (el.name.includes(search)) {
+                response.push(el)
+            }
+        });
+        this._products$.next(response);
+    }
+
     getProducts(parentId: number) {
         this._http.get(porductsUrl + '/?category_id=' + parentId)
             .map((res: Response) => res.json().data)
