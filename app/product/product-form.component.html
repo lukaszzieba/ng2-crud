@@ -1,4 +1,4 @@
-<div class="form">
+<form>
   <md-card>
     <md-card-title>
       <md-card-title-text>
@@ -10,13 +10,13 @@
       <div>
         <md-input placeholder="Name" [(ngModel)]="product.name"></md-input>
         <md-input placeholder="Descripton" [(ngModel)]="product.description"></md-input>
-        <md-input placeholder="Price" [(ngModel)]="product.price"></md-input>          
+        <md-input placeholder="Price" [(ngModel)]="product.price"></md-input>
       </div>
     </md-card-caontent>
-    <md-card-actions align="end">
+    <md-card-actions>
       <button *ngIf="!editMode" type="button" (click)="add()" md-raised-button class="md-raised-button md-primary">Add</button>
       <button *ngIf="editMode" type="button" (click)="update()" md-raised-button class="md-raised-button md-primary">Save</button>
       <button *ngIf="editMode" type="button" (click)="cancel()" md-raised-button class="md-raised-button">Cancel</button>
     </md-card-actions>
   </md-card>
-  </div>
+</form>

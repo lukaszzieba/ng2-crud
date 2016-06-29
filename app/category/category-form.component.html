@@ -1,40 +1,44 @@
-<div class="form">
+<form ngForm="categoryForm" #categoryForm="ngForm">
   <md-card>
     <md-card-title>
       <md-card-title-text>
-        <span class="md-headline">Create category</span>
+        <span *ngIf="!editMode" class="md-headline">Create category</span>
+        <span *ngIf="editMode" class="md-headline">Update category</span>
       </md-card-title-text>
     </md-card-title>
     <md-card-caontent>
       <div>
-        <md-input placeholder="Name" [(ngModel)]="category.name"></md-input>
-        <md-input placeholder="Descripton" [(ngModel)]="category.description"></md-input>        
-          <div flex-xs="100" flex="50">
-            <md-checkbox (change)="cbChange($event)" [checked]="category.is_visible" aria-label="Checkbox 1">
-              Visible
-            </md-checkbox>
-          </div>
+        <md-input ngControl="categoryName" #categoryName="ngForm" required placeholder="Name" [(ngModel)]="category.name"></md-input>
+        <div *ngIf="!categoryName.valid && categoryName.touched" class="error">
+          Name is required.
+        </div>
+        <md-input placeholder="Descripton" [(ngModel)]="category.description"></md-input>
+        <div flex-xs="100" flex="50">
+          <md-checkbox (change)="cbChange($event)" [checked]="category.is_visible" aria-label="Checkbox 1">
+            Visible
+          </md-checkbox>
+        </div>
       </div>
     </md-card-caontent>
-    <md-card-actions align="end">
-      <button *ngIf="!editMode" type="button" (click)="add()" md-raised-button class="md-raised-button md-primary">Add</button>
-      <button *ngIf="editMode" type="button" (click)="save()" md-raised-button class="md-raised-button md-primary">Save</button>
-      <button *ngIf="editMode" type=" button " (click)="cancel() " md-raised-button>Cancel</button>      
+    <md-card-actions>
+      <button [disabled]="!categoryForm.valid" *ngIf="!editMode" type="button" (click)="add()" md-raised-button class="md-raised-button md-primary">Add</button>
+      <button [disabled]="!categoryForm.valid" *ngIf="editMode" type="button" (click)="save()" md-raised-button class="md-raised-button md-primary">Save</button>
+      <button *ngIf="editMode" type="button" (click)="cancel()" md-raised-button>Cancel</button>
     </md-card-actions>
   </md-card>
-  </div>
+</form>
 
-  <md-dialog #confirm (onClose)="confirmClose($event)">
-            <md-dialog-title>Confirm delete</md-dialog-title>
-            Are you sure to delete this element
-            <md-dialog-actions>
-               
-                <span flex></span>
-                <button md-button (click)="confirm.close(true)">
+<md-dialog #confirm (onClose)="confirmClose($event)">
+  <md-dialog-title>Confirm delete</md-dialog-title>
+  Are you sure to delete this element
+  <md-dialog-actions>
+
+    <span flex></span>
+    <button md-button (click)="confirm.close(true)">
       <span>Yes</span>
     </button>
-                <button md-button class="md-primary" (click)="confirm.close(false)">
+    <button md-button class="md-primary" (click)="confirm.close(false)">
       <span>Cancel</span>
     </button>
-            </md-dialog-actions>
-        </md-dialog>
+  </md-dialog-actions>
+</md-dialog>
