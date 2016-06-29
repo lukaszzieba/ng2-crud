@@ -93,6 +93,7 @@
         'router',
         'router-deprecated',
         'upgrade',
+        'forms'
     ];
 
     // Individual files (~300 requests):

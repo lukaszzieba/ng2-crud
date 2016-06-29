@@ -1,7 +1,7 @@
 // ng2
 import { Component, OnInit } from '@angular/core';
 
-//
+// my components
 import { CategoryListComponent } from '../category/category-list.component';
 
 @Component({    
@@ -13,5 +13,4 @@ export class DashboardComponent implements OnInit {
     constructor() { }
 
     ngOnInit() { }
-
 }

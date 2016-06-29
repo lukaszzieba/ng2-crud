@@ -1,37 +1,44 @@
 <h2>Categories</h2>
-<button *ngIf="editMode" (click)="showForm = !showForm" md-button md-no-ink class="md-primary">
-    <i class="material-icons">add</i> Add category
-</button>
+
+<div layout="row" layout-align="center center">
+    <button *ngIf="editMode" (click)="showForm = !showForm" md-button md-no-ink class="md-primary">
+        <i class="material-icons">add</i> Add category
+    </button>
+    <text-filter (changed)="filterChanged($event)"></text-filter>
+</div>
+
 <category-form *ngIf="showForm" (addCategory)="addCategory($event)" (updateCategory)="save($event)" (cancelForm)="cancel($event)"
     [categoryToEdit]="categoryToUpdate"></category-form>
-<md-data-table layout-fill>
+<md-data-table>
     <thead>
         <tr>
             <th>Name</th>
-            <th>Description</th>
+            <th>Description</th>            
             <th>Actions</th>
         </tr>
     </thead>
-    <tbody>
-        <tr *ngFor="let category of categories | async">
+    <tbody *ngFor="let category of categories | async">
+        <tr *ngIf="category.is_visible || editMode">
             <td class="md-text-cell">{{category.name}}</td>
-            <td>{{category.description}}</td>
+            <td>{{category.description}}</td>           
             <td>
                 <div layout="row" layout-align="end center">
+
                     <button md-fab class="md-primary" aria-label="Details" (click)="goToCategoryDetails(category.id)">
                        <i class="material-icons">developer_board</i>
                     </button>
                     <label class="fab-label">Details</label>
+
                     <button *ngIf="editMode" md-fab class="md-primary" aria-label="Edit" (click)="edit(category)">
                         <i class="material-icons">edit</i>
                     </button>
                     <label *ngIf="editMode" class="fab-label">Edit</label>
-                    <!--</div>
-                <div layout="row">-->
+
                     <button *ngIf="editMode" md-fab class="md-warn" aria-label="Delete" (click)=" confirm.show(); setToDelete(category.id)">
                         <i class="material-icons">delete</i>
                     </button>
                     <label *ngIf="editMode" class="fab-label">Delete</label>
+
                 </div>
             </td>
         </tr>

@@ -11,6 +11,7 @@ import {MATERIAL_DIRECTIVES, MATERIAL_PROVIDERS} from 'ng2-material';
 // my components
 import { Category, CategoryService } from './category.service';
 import { CategoryFormComponent } from './category-form.component';
+import { TextFilterComponent } from '../shared/text-filter/text-fliter.component'
 
 @Component({
     selector: 'category-list',
@@ -18,7 +19,8 @@ import { CategoryFormComponent } from './category-form.component';
     styleUrls: ['app/category/category-list.component.css'],
     directives: [
         CategoryFormComponent,
-        MATERIAL_DIRECTIVES
+        MATERIAL_DIRECTIVES,
+        TextFilterComponent
     ],
     providers: [
         CategoryService,
@@ -42,6 +44,10 @@ export class CategoryListComponent implements OnInit {
         this.showForm = false;
     }
 
+    filterChanged(search: string) {
+        this._categoryService.filter(search);
+    }
+
     // add category
     addCategory(category: Category) {
         console.log(category);
@@ -63,12 +69,23 @@ export class CategoryListComponent implements OnInit {
 
     // to edit
     edit(category: Category) {
-        this.categoryToUpdate = category;
+        // this.categoryToUpdate = category;
+
+        let temp: Category = <Category>{};
+
+        temp.id = category.id;
+        temp.parent_id = category.parent_id;
+        temp.is_visible = category.is_visible;
+        temp.ordering = category.ordering;
+        temp.name = category.name;
+        temp.description = category.description;
+
+        this.categoryToUpdate = temp;
+
         this.showForm = true;
     }
 
     save(updateCategory: Category) {
-        console.log(updateCategory);
         this._categoryService.updateCategory(updateCategory);
         this.showForm = false;
         this.categoryToUpdate = null;
@@ -81,18 +98,8 @@ export class CategoryListComponent implements OnInit {
 
     // init
     ngOnInit() {
-        this._activatedRoute.url.subscribe(url => {
-            url.forEach((url, i) => {
-                if (url.path === 'dashboard') {
-                    this.editMode = true;
-                }
-            });
-        });
-
-        this._activatedRoute.params.subscribe(params => {
-            let id = !params['id'] ? this._categoryService.getRootCategoryId() : params['id'];
-            this._categoryService.getCategoryByParentId(id);
-        });
+        this._checkSecureUrl();
+        this._getCategories();
     }
 
     goToCategoryDetails(categoryId: number) {
@@ -101,5 +108,22 @@ export class CategoryListComponent implements OnInit {
         } else {
             this._router.navigate(['/categoty/details/', categoryId])
         }
-    }  
+    }
+
+    private _checkSecureUrl() {
+        this._activatedRoute.url.subscribe(url => {
+            url.forEach((url, i) => {
+                if (url.path === 'dashboard') {
+                    this.editMode = true;
+                }
+            });
+        });
+    }
+
+    private _getCategories() {
+        this._activatedRoute.params.subscribe(params => {
+            let id = !params['id'] ? this._categoryService.getRootCategoryId() : params['id'];
+            this._categoryService.getCategoryByParentId(id);
+        });
+    }
 }

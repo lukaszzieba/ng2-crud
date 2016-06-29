@@ -1,5 +1,5 @@
 
-.form md-card {    
+form md-card {    
     width: 80%;
     box-sizing: border-box;
     margin: 0 auto;
@@ -18,3 +18,8 @@ md-input {
     width: 80%;
 }
 
+.error {
+    width: 80%;
+    color: #cb2f41;
+    border-bottom: 2px solid #cb2f41;
+}

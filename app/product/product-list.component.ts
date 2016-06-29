@@ -11,6 +11,7 @@ import {MATERIAL_DIRECTIVES, MATERIAL_PROVIDERS} from 'ng2-material';
 // my components
 import { Product, ProductService } from './product.service';
 import { ProductFormComponent } from './product-form.component';
+import { TextFilterComponent } from '../shared/text-filter/text-fliter.component'
 
 @Component({
     selector: 'product-list',
@@ -18,7 +19,8 @@ import { ProductFormComponent } from './product-form.component';
     styleUrls: ['./app/product/product-list.component.css'],
     directives: [
         ProductFormComponent,
-        MATERIAL_DIRECTIVES
+        MATERIAL_DIRECTIVES,
+        TextFilterComponent
     ],
     providers: [
         ProductService,
@@ -36,14 +38,18 @@ export class ProductListComponent implements OnInit {
     productIdToDelete: number;
     productsLength: number;
 
-    editMode: boolean = false;
+    editMode: boolean = false;    
 
     constructor(
         private _productService: ProductService,
         private _router: Router,
         private _activatedRoute: ActivatedRoute) {
         this.products = this._productService.products$;
-        this.showForm = false;
+        this.showForm = false;      
+    }
+
+    filterChanged(search: string) {
+        this._productService.filter(search);
     }
 
     // add product
@@ -64,8 +70,15 @@ export class ProductListComponent implements OnInit {
     }
 
     // edit product
-    editProduct(product: Product) {
-        this.productToEdit = product;
+    editProduct(product: Product) { 
+        let prod: Product = <Product>{};
+        prod.id = product.id;
+        prod.category_id = product.category_id;
+        prod.name = product.name;
+        prod.description = product.description;
+        prod.price = product.price;
+
+        this.productToEdit = prod;
         this.showForm = true;
     }
 
@@ -82,6 +95,11 @@ export class ProductListComponent implements OnInit {
 
     // init
     ngOnInit() {
+        this._checkSecureUrl();
+        this._getProducts();
+    }
+
+    private _checkSecureUrl() {
         this._activatedRoute.url.subscribe(url => {
             url.forEach((url, i) => {
                 if (url.path === 'dashboard') {
@@ -90,10 +108,12 @@ export class ProductListComponent implements OnInit {
                 }
             });
         });
+    }
 
+    private _getProducts() {
         this._activatedRoute.params.subscribe(params => {
             this.parentId = + params['id'];
-            this._productService.getProducts(this.parentId);
+            this._productService.getProducts(this.parentId);            
         });
     }
 }

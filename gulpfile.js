@@ -14,16 +14,7 @@ var tsProject = typescript.createProject('tsconfig.json');
 gulp.task('build-ts', function() {
     return gulp.src(appDev + '**/*.ts')
         .pipe(sourcemaps.init())
-        .pipe(typescript(tsProject))
-        // .pipe(typescript({
-        //     typescript: require('typescript'), // In my package.json I have "typescript": "~1.8.0-dev.20151128"
-        //     target: 'ES5',
-        //     module: 'system',
-        //     experimentalDecorators: true,
-        //     emitDecoratorMetadata: true,
-        //     outDir : 'dist/contat/',
-        //     outFile: 'app.js'
-        // }))
+        .pipe(typescript(tsProject))      
         .pipe(sourcemaps.write())
         //.pipe(jsuglify())
         .pipe(gulp.dest(appProd));

@@ -8,7 +8,6 @@ import { Subject } from 'rxjs/Subject';
 // my componets
 import { CONFIG } from '../shared/config';
 let rootCategoryId = CONFIG.baseUrls.rootCategoryId;
-let rootCategory = CONFIG.baseUrls.rootCategory;
 let categoriesUrl = CONFIG.baseUrls.categories;
 
 export interface Category {
@@ -24,7 +23,7 @@ export interface Category {
 export class CategoryService {
 
     private _categories$: Subject<Category[]>;
-    private _dataStore: {  // This is where we will store our data in memory
+    private _dataStore: {
         categories: Category[]
     };
 
@@ -37,25 +36,26 @@ export class CategoryService {
         return this._categories$.asObservable();
     }
 
-    getRootCategoryId() {
-        return rootCategoryId;
+    filter(search: string) {
+        let response = <Category[]>[];
+        this._dataStore.categories.forEach((el, i) => {
+            if (el.name.includes(search)) {
+                response.push(el)
+            }
+        });
+        this._categories$.next(response);
     }
 
-    getRootCategory() {
-        this._http.get(rootCategory)
-            .map((res: Response) => res.json().data)
-            .subscribe(data => {
-                this._dataStore.categories = data;
-                this._categories$.next(this._dataStore.categories);
-            });
-    }
+    getRootCategoryId() {
+        return rootCategoryId;
+    }   
 
     addCategory(category: Category) {
         let body = JSON.stringify(category);
         this._http.post(`${categoriesUrl}`, body)
             .map((res: Response) => res.json().data)
             .subscribe(data => {
-                console.log(data);                
+                console.log(data);
                 this._dataStore.categories.push(data);
                 this._categories$.next(this._dataStore.categories);
             });
@@ -93,14 +93,15 @@ export class CategoryService {
     updateCategory(updateCategory: Category) {
         let body = JSON.stringify(updateCategory);
         this._http.put(categoriesUrl + '/' + updateCategory.id, body)
-            .map((res: Response) => res.json().data)
-            .subscribe(data => {
-                this._dataStore.categories.forEach((c, i) => {
-                    if (c.id === updateCategory.id) {
-                        this._dataStore.categories[i] = data;
-                    }
-                });
+            .subscribe((res: Response) => {
+                if (res.ok) {
+                    this._dataStore.categories.forEach((c, i) => {
+                        if (c.id === updateCategory.id) {
+                            this._dataStore.categories[i] = updateCategory;
+                        }
+                    });
+                    this._categories$.next(this._dataStore.categories);
+                }
             });
-        this._categories$.next(this._dataStore.categories);
-    }   
+    }    
 }

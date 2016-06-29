@@ -4,8 +4,13 @@
 md-card {
     width: 45%;
     box-sizing: border-box;
-    margin: 16px;
+    
     cursor: pointer;     
+}
+
+md-card md-data-table  {
+    margin: 0;
+    padding: 0;
 }
 
 .card-container {

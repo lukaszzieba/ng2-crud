@@ -21,25 +21,35 @@ export interface Product {
 export class ProductService {
 
     private _products$: Subject<Product[]>;
-    private _dataStore: {  // This is where we will store our data in memory
+    private _dataStore: {
         products: Product[]
-    };    
-
+    };   
     constructor(private _http: Http) {
         this._products$ = new Subject<Product[]>();
         this._dataStore = { products: [] };
+       
     }
 
     get products$() {
         return this._products$.asObservable();
     }   
 
+    filter(search: string) {
+        let response = <Product[]>[];
+        this._dataStore.products.forEach((el, i) => {
+            if (el.name.includes(search)) {
+                response.push(el)
+            }
+        });
+        this._products$.next(response);
+    }
+
     getProducts(parentId: number) {
         this._http.get(porductsUrl + '/?category_id=' + parentId)
             .map((res: Response) => res.json().data)
             .subscribe(data => {
-                this._dataStore.products = data;                
-                this._products$.next(this._dataStore.products);
+                this._dataStore.products = data;
+                this._products$.next(this._dataStore.products);               
             });
     }
 
@@ -49,7 +59,7 @@ export class ProductService {
             .map((res: Response) => res.json().data)
             .subscribe(data => {
                 this._dataStore.products.push(data);
-                this._products$.next(this._dataStore.products);
+                this._products$.next(this._dataStore.products);                 
             });
     }
 
@@ -68,14 +78,15 @@ export class ProductService {
     updateProduct(updatedProduct: Product) {
         let body = JSON.stringify(updatedProduct);
         this._http.put(porductsUrl + '/' + updatedProduct.id, body)
-            .map((res: Response) => res.json().data)
-            .subscribe(data => {
-                this._dataStore.products.forEach((p, i) => {
-                    if (p.id === updatedProduct.id) {
-                        this._dataStore.products[i] = data;
-                    }
-                });
+            .subscribe((res: Response) => {
+                if (res.ok) {
+                    this._dataStore.products.forEach((p, i) => {
+                        if (p.id === updatedProduct.id) {
+                            this._dataStore.products[i] = updatedProduct;
+                        }
+                    });
+                    this._products$.next(this._dataStore.products);
+                }
             });
-        this._products$.next(this._dataStore.products);
     }
 }

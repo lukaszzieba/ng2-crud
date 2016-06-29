@@ -5,8 +5,6 @@ import { Observable } from 'rxjs/Observable';
 
 // my components
 import { Category, CategoryService } from './category.service';
-// import { SpinerComponent } from '../shared/spiner.component';
-
 import { CategoryListComponent } from './category-list.component';
 import { ProductListComponent } from '../product/product-list.component';
 
