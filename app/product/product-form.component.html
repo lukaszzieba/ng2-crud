@@ -1,4 +1,4 @@
-<form>
+<form [ngFormModel]="productForm">
   <md-card>
     <md-card-title>
       <md-card-title-text>
@@ -8,14 +8,20 @@
     </md-card-title>
     <md-card-caontent>
       <div>
-        <md-input placeholder="Name" [(ngModel)]="product.name"></md-input>
-        <md-input placeholder="Descripton" [(ngModel)]="product.description"></md-input>
-        <md-input placeholder="Price" [(ngModel)]="product.price"></md-input>
+        <md-input ngControl="productName" #productName="ngForm" placeholder="Name" [(ngModel)]="product.name"></md-input>
+        <div class="error" *ngIf="!productName.valid && productName.touched">
+          Name is required.
+        </div>
+        <md-input ngControl="productDexcription" placeholder="Descripton" [(ngModel)]="product.description"></md-input>
+        <md-input ngControl="productPrice" #productPrice="ngForm" placeholder="Price" type="number" min="1" [(ngModel)]="product.price"></md-input>
+        <div class="error" *ngIf="!productPrice.valid && productPrice.touched">
+          Price is required.
+        </div>       
       </div>
     </md-card-caontent>
     <md-card-actions>
-      <button *ngIf="!editMode" type="button" (click)="add()" md-raised-button class="md-raised-button md-primary">Add</button>
-      <button *ngIf="editMode" type="button" (click)="update()" md-raised-button class="md-raised-button md-primary">Save</button>
+      <button *ngIf="!editMode" [disabled]="!productForm.valid" type="button" (click)="add()" md-raised-button class="md-raised-button md-primary">Add</button>
+      <button *ngIf="editMode" [disabled]="!productForm.valid" type="button" (click)="update()" md-raised-button class="md-raised-button md-primary">Save</button>
       <button *ngIf="editMode" type="button" (click)="cancel()" md-raised-button class="md-raised-button">Cancel</button>
     </md-card-actions>
   </md-card>

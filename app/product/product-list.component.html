@@ -16,7 +16,7 @@
             <th>Name</th>
             <th>Description</th>
             <th>Price</th>
-            <th>Actions</th>
+            <th *ngIf="editMode">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -29,9 +29,7 @@
                     <button *ngIf="editMode" md-fab class="md-primary" aria-label="Edit" (click)="editProduct(product)">
                         <i class="material-icons">edit</i>
                     </button>
-                    <label *ngIf="editMode" class="fab-label">Edit</label>
-                    <!--</div>
-                <div layout="row">-->
+                    <label *ngIf="editMode" class="fab-label">Edit</label>                   
                     <button *ngIf="editMode" md-fab class="md-warn" aria-label="Delete" (click)=" confirm.show(); setToDelete(product.id)">
                         <i class="material-icons">delete</i>
                     </button>

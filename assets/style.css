@@ -9,37 +9,5 @@ html, body {
     position: relative;
 }
 #container {
-    padding: 10px;
-    /* Height of the footer */
-    padding-bottom: 130px;
+    padding: 10px;    
 }
-/*----------------------------------------------------------------------------*/
-
-
-/*FOOTER*/
-
-
-/*----------------------------------------------------------------------------*/
-
-#footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    /* Height of the footer */
-    height: 110px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("./footer.jpg");
-    background-repeat: no-repeat;
-    /*background-attachment: fixed;*/
-    background-position: center;
-}
-#footer p {
-    color: #dbdbdb;
-    padding-top: 40px;
-    text-align: center;
-}
-.alert {
-    margin: 0;
-    padding: 7px;
-}
-
-

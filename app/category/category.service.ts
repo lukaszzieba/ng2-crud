@@ -103,6 +103,5 @@ export class CategoryService {
                     this._categories$.next(this._dataStore.categories);
                 }
             });
-    }
-    
+    }    
 }

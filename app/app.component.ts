@@ -9,7 +9,6 @@ import { CategoryData }   from './api/category-data';
 
 // my components
 import { NavComponent } from './shared/nav/nav.component';
-import { FootComponent } from './shared/foot/foot.component';
 
 @Component({
     selector: 'app',
@@ -17,8 +16,7 @@ import { FootComponent } from './shared/foot/foot.component';
     styleUrls: ['app/app.component.css'],
     directives: [
         ROUTER_DIRECTIVES,
-        NavComponent,
-        FootComponent
+        NavComponent        
     ],
     providers: [
         HTTP_PROVIDERS,

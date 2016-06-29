@@ -48,8 +48,8 @@ export class ProductListComponent implements OnInit {
         this.showForm = false;
     }
 
-    filterChanged(search : string) {
-         this._productService.filter(search);
+    filterChanged(search: string) {
+        this._productService.filter(search);
     }
 
     // add product
@@ -71,7 +71,17 @@ export class ProductListComponent implements OnInit {
 
     // edit product
     editProduct(product: Product) {
-        this.productToEdit = product;
+        // this.productToEdit = product;
+
+        let prod: Product = <Product>{};
+
+        prod.id = product.id;
+        prod.category_id = product.category_id;
+        prod.name = product.name;
+        prod.description = product.description;
+        prod.price = product.price;
+
+        this.productToEdit = prod;
         this.showForm = true;
     }
 

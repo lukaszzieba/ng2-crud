@@ -18,3 +18,8 @@ md-input {
     width: 80%;
 }
 
+.error {
+    width: 80%;
+    color: #cb2f41;
+    border-bottom: 2px solid #cb2f41;
+}
