@@ -9,20 +9,18 @@
 
 <category-form *ngIf="showForm" (addCategory)="addCategory($event)" (updateCategory)="save($event)" (cancelForm)="cancel($event)"
     [categoryToEdit]="categoryToUpdate"></category-form>
-<md-data-table layout-fill>
+<md-data-table>
     <thead>
         <tr>
             <th>Name</th>
-            <th>Description</th>
-            <th *ngIf="editMode">Visiblility</th>
+            <th>Description</th>            
             <th>Actions</th>
         </tr>
     </thead>
     <tbody *ngFor="let category of categories | async">
         <tr *ngIf="category.is_visible || editMode">
             <td class="md-text-cell">{{category.name}}</td>
-            <td>{{category.description}}</td>
-            <td *ngIf="editMode">{{category.is_visible}}</td>
+            <td>{{category.description}}</td>           
             <td>
                 <div layout="row" layout-align="end center">
 

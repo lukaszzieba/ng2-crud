@@ -8,11 +8,7 @@
     padding: 10px;    
 }*/
 
-.col:first {
-    float: left;
-    width: 47%;
-    padding: 10px;     
-}
+
 
 .col {
     float: left;

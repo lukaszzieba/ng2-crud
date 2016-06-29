@@ -38,14 +38,14 @@ export class ProductListComponent implements OnInit {
     productIdToDelete: number;
     productsLength: number;
 
-    editMode: boolean = false;
+    editMode: boolean = false;    
 
     constructor(
         private _productService: ProductService,
         private _router: Router,
         private _activatedRoute: ActivatedRoute) {
         this.products = this._productService.products$;
-        this.showForm = false;
+        this.showForm = false;      
     }
 
     filterChanged(search: string) {
@@ -113,7 +113,7 @@ export class ProductListComponent implements OnInit {
     private _getProducts() {
         this._activatedRoute.params.subscribe(params => {
             this.parentId = + params['id'];
-            this._productService.getProducts(this.parentId);
+            this._productService.getProducts(this.parentId);            
         });
     }
 }

@@ -1,3 +1,4 @@
+// ng2
 import { provideRouter, RouterConfig } from '@angular/router';
 
 // my components
@@ -6,9 +7,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CategoryFormComponent } from './category/category-form.component';
 import { CategoryListComponent } from './category/category-list.component';
 import { CategoryDetailsComponent } from './category/category-details.component';
-
-import { ProductFormComponent } from './product/product-form.component';
-
 
 export const routes: RouterConfig = [
   { path: '', component: HomeComponent },
