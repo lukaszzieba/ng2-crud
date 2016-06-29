@@ -16,25 +16,18 @@ import { FootComponent } from './shared/foot/foot.component';
     templateUrl: 'app/app.component.html',
     styleUrls: ['app/app.component.css'],
     directives: [
-        // ng2
         ROUTER_DIRECTIVES,
-
-        // my components
         NavComponent,
         FootComponent
-          
     ],
     providers: [
-        // ng2
         HTTP_PROVIDERS,
-
-        // ng2 in memory web api
         { provide: XHRBackend, useClass: InMemoryBackendService },
         { provide: SEED_DATA, useClass: CategoryData }
     ],
-    viewProviders: [ ]
+    viewProviders: []
 })
 export class AppComponent {
-    constructor() {        
+    constructor() {
     }
 }

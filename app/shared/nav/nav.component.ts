@@ -1,7 +1,8 @@
+// ng2
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 
-// import {MdIcon} from 'ng2-material';
+// ng2 material
 import {MD_SIDENAV_DIRECTIVES} from '@angular2-material/sidenav';
 import {MD_BUTTON_DIRECTIVES} from '@angular2-material/button';
 import {MD_LIST_DIRECTIVES}  from "@angular2-material/list";
@@ -12,9 +13,7 @@ import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
     selector: 'navigation',
     templateUrl: 'app/shared/nav/navigation.component.html',
     directives: [
-        ROUTER_DIRECTIVES,
-
-        // ng2 material
+        ROUTER_DIRECTIVES,       
         MD_SIDENAV_DIRECTIVES,
         MD_BUTTON_DIRECTIVES,
         MD_LIST_DIRECTIVES,        

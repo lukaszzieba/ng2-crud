@@ -8,7 +8,6 @@ import { Subject } from 'rxjs/Subject';
 // my componets
 import { CONFIG } from '../shared/config';
 let rootCategoryId = CONFIG.baseUrls.rootCategoryId;
-let rootCategory = CONFIG.baseUrls.rootCategory;
 let categoriesUrl = CONFIG.baseUrls.categories;
 
 export interface Category {
@@ -49,17 +48,7 @@ export class CategoryService {
 
     getRootCategoryId() {
         return rootCategoryId;
-    }
-
-
-    getRootCategory() {
-        this._http.get(rootCategory)
-            .map((res: Response) => res.json().data)
-            .subscribe(data => {
-                this._dataStore.categories = data;
-                this._categories$.next(this._dataStore.categories);
-            });
-    }
+    }   
 
     addCategory(category: Category) {
         let body = JSON.stringify(category);
