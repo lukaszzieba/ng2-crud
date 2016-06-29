@@ -104,14 +104,16 @@ export class CategoryService {
     updateCategory(updateCategory: Category) {
         let body = JSON.stringify(updateCategory);
         this._http.put(categoriesUrl + '/' + updateCategory.id, body)
-            .map((res: Response) => res.json().data)
-            .subscribe(data => {
-                this._dataStore.categories.forEach((c, i) => {
-                    if (c.id === updateCategory.id) {
-                        this._dataStore.categories[i] = data;
-                    }
-                });
+            .subscribe((res: Response) => {
+                if (res.ok) {
+                    this._dataStore.categories.forEach((c, i) => {
+                        if (c.id === updateCategory.id) {
+                            this._dataStore.categories[i] = updateCategory;
+                        }
+                    });
+                    this._categories$.next(this._dataStore.categories);
+                }
             });
-        this._categories$.next(this._dataStore.categories);
     }
+    
 }

@@ -44,7 +44,7 @@ export class CategoryListComponent implements OnInit {
         this.showForm = false;
     }
 
-    filterChanged(search : string) {
+    filterChanged(search: string) {
         this._categoryService.filter(search);
     }
 
@@ -69,12 +69,23 @@ export class CategoryListComponent implements OnInit {
 
     // to edit
     edit(category: Category) {
-        this.categoryToUpdate = category;
+        // this.categoryToUpdate = category;
+
+        let temp: Category = <Category>{};
+
+        temp.id = category.id;
+        temp.parent_id = category.parent_id;
+        temp.is_visible = category.is_visible;
+        temp.ordering = category.ordering;
+        temp.name = category.name;
+        temp.description = category.description;
+
+        this.categoryToUpdate = temp;
+
         this.showForm = true;
     }
 
-    save(updateCategory: Category) {
-        console.log(updateCategory);
+    save(updateCategory: Category) {        
         this._categoryService.updateCategory(updateCategory);
         this.showForm = false;
         this.categoryToUpdate = null;
@@ -107,5 +118,5 @@ export class CategoryListComponent implements OnInit {
         } else {
             this._router.navigate(['/categoty/details/', categoryId])
         }
-    }  
+    }
 }

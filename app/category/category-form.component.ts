@@ -67,19 +67,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
     cancel() {
         this.cancelForm.emit({});
     }
-
-
-    confirmClose($event) {
-        // if ($event) {
-        //     this.delete();
-        // }
-        // console.log($event);
-    }
-
-    saveA() {
-        // this._categoryStore.update(this.category);
-        // this._goBack();
-    }
+  
 
     ngOnInit() {
         if (this.categoryToEdit) {
@@ -96,11 +84,5 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 
         this.category = <Category>{};
         this.categoryToEdit = null;
-    }
-
-    private _goBack() {
-        window.history.back();
-        // let route = ['/categories'];
-        // this._router.navigate(route)
-    }
+    }   
 }
