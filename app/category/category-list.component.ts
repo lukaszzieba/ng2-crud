@@ -49,16 +49,14 @@ export class CategoryListComponent implements OnInit {
     }
 
     // add category
-    addCategory(category: Category) {
-        console.log(category);
+    addCategory(category: Category) {        
         this._categoryService.addCategory(category);
         this.showForm = false;
     }
 
     // to delete category
     setToDelete(id: number) {
-        this.categoryIdToDelete = id;
-        console.log(this.categoryIdToDelete);
+        this.categoryIdToDelete = id;       
     }
 
     confirmClose($event: boolean) {

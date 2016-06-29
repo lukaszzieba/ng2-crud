@@ -54,8 +54,7 @@ export class CategoryService {
         let body = JSON.stringify(category);
         this._http.post(`${categoriesUrl}`, body)
             .map((res: Response) => res.json().data)
-            .subscribe(data => {
-                console.log(data);
+            .subscribe(data => {                
                 this._dataStore.categories.push(data);
                 this._categories$.next(this._dataStore.categories);
             });

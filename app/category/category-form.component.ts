@@ -45,8 +45,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
         this.category.is_visible = true;
     }
 
-    cbChange(e: any) {
-        console.log(e);
+    cbChange(e: any) {       
         this.category.is_visible = e.checked;
     }
 
