@@ -2,6 +2,9 @@
 import { Component, OnInit, Input  } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
+// lodash
+import  * as _ from 'lodash';
+
 // rxjs
 import { Observable } from 'rxjs/Observable';
 
@@ -49,14 +52,14 @@ export class CategoryListComponent implements OnInit {
     }
 
     // add category
-    addCategory(category: Category) {        
+    addCategory(category: Category) {
         this._categoryService.addCategory(category);
         this.showForm = false;
     }
 
     // to delete category
     setToDelete(id: number) {
-        this.categoryIdToDelete = id;       
+        this.categoryIdToDelete = id;
     }
 
     confirmClose($event: boolean) {
@@ -66,20 +69,9 @@ export class CategoryListComponent implements OnInit {
     }
 
     // to edit
-    edit(category: Category) {
-        // this.categoryToUpdate = category;
-
-        let temp: Category = <Category>{};
-
-        temp.id = category.id;
-        temp.parent_id = category.parent_id;
-        temp.is_visible = category.is_visible;
-        temp.ordering = category.ordering;
-        temp.name = category.name;
-        temp.description = category.description;
-
-        this.categoryToUpdate = temp;
-
+    edit(category: Category) {          
+        let categoryClone: Category = _.clone(category);   
+        this.categoryToUpdate = categoryClone;
         this.showForm = true;
     }
 

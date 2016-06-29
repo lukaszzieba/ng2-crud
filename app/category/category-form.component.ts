@@ -1,6 +1,8 @@
 // ng2
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+// lodash
+import { lodash } from 'lodash';
 
 // my components
 import { Category, CategoryService } from './category.service';

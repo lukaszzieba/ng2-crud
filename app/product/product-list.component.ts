@@ -2,6 +2,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
+// lodash
+import  * as _ from 'lodash';
+
 // rxjs
 import { Observable } from 'rxjs/Observable';
 
@@ -70,15 +73,9 @@ export class ProductListComponent implements OnInit {
     }
 
     // edit product
-    editProduct(product: Product) { 
-        let prod: Product = <Product>{};
-        prod.id = product.id;
-        prod.category_id = product.category_id;
-        prod.name = product.name;
-        prod.description = product.description;
-        prod.price = product.price;
-
-        this.productToEdit = prod;
+    editProduct(product: Product) {   
+        let productClone = _.clone(product);
+        this.productToEdit = productClone;
         this.showForm = true;
     }
 

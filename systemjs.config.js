@@ -20,7 +20,8 @@
         '@angular2-material/list': 'node_modules/@angular2-material/list',
         '@angular2-material/input': 'node_modules/@angular2-material/input',
         '@angular2-material/checkbox': 'node_modules/@angular2-material/checkbox',
-        'ng2-material': 'node_modules/ng2-material'       
+        'ng2-material': 'node_modules/ng2-material',
+        'lodash': 'node_modules/lodash'
     };
 
     // packages tells the System loader how to load when no filename and/or no extension
@@ -36,7 +37,7 @@
             main: 'index.js',
             defaultExtension: 'js'
         },
-       '@angular2-material/core': {
+        '@angular2-material/core': {
             main: 'core.js',
             defaultExtension: 'js'
         },
@@ -68,7 +69,7 @@
             main: 'input.js',
             defaultExtension: 'js'
         },
-         '@angular2-material/checkbox': {
+        '@angular2-material/checkbox': {
             main: 'checkbox.js',
             defaultExtension: 'js'
         },
@@ -80,7 +81,10 @@
             main: 'index.js',
             defaultExtension: 'js'
         },
-        'ng2-toastr': { defaultExtension: 'js', main: 'index' }        
+        'lodash': {
+            main: 'lodash.js',
+            defaultExtension: 'js'
+        }
     };
 
     var ngPackageNames = [
