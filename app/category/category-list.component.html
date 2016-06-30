@@ -47,7 +47,7 @@
 
 <md-dialog #confirm (onClose)="confirmClose($event)">
     <md-dialog-title>Confirm delete</md-dialog-title>
-    Are you sure to delete this element
+    Are you sure to delete this element and all nested items?
     <md-dialog-actions>
         <span flex></span>
         <button md-button (click)="confirm.close(true)">

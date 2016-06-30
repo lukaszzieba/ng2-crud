@@ -23,16 +23,16 @@ export class ProductService {
     private _products$: Subject<Product[]>;
     private _dataStore: {
         products: Product[]
-    };   
+    };
     constructor(private _http: Http) {
         this._products$ = new Subject<Product[]>();
         this._dataStore = { products: [] };
-       
+
     }
 
     get products$() {
         return this._products$.asObservable();
-    }   
+    }
 
     filter(search: string) {
         let response = <Product[]>[];
@@ -49,7 +49,7 @@ export class ProductService {
             .map((res: Response) => res.json().data)
             .subscribe(data => {
                 this._dataStore.products = data;
-                this._products$.next(this._dataStore.products);               
+                this._products$.next(this._dataStore.products);
             });
     }
 
@@ -59,7 +59,7 @@ export class ProductService {
             .map((res: Response) => res.json().data)
             .subscribe(data => {
                 this._dataStore.products.push(data);
-                this._products$.next(this._dataStore.products);                 
+                this._products$.next(this._dataStore.products);
             });
     }
 
@@ -73,7 +73,7 @@ export class ProductService {
                 });
             });
         this._products$.next(this._dataStore.products);
-    }
+    }    
 
     updateProduct(updatedProduct: Product) {
         let body = JSON.stringify(updatedProduct);

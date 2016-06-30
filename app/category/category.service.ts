@@ -9,6 +9,7 @@ import { Subject } from 'rxjs/Subject';
 import { CONFIG } from '../shared/config';
 let rootCategoryId = CONFIG.baseUrls.rootCategoryId;
 let categoriesUrl = CONFIG.baseUrls.categories;
+let porductsUrl = CONFIG.baseUrls.products;
 
 export interface Category {
     id: number;
@@ -48,13 +49,13 @@ export class CategoryService {
 
     getRootCategoryId() {
         return rootCategoryId;
-    }   
+    }
 
     addCategory(category: Category) {
         let body = JSON.stringify(category);
         this._http.post(`${categoriesUrl}`, body)
             .map((res: Response) => res.json().data)
-            .subscribe(data => {                
+            .subscribe(data => {
                 this._dataStore.categories.push(data);
                 this._categories$.next(this._dataStore.categories);
             });
@@ -87,6 +88,35 @@ export class CategoryService {
                 });
             });
         this._categories$.next(this._dataStore.categories);
+        this.deleteNestedCategories(id);
+    }
+
+    deleteNestedCategories(parent_id: number) {
+        let url = categoriesUrl + '/?parent_id=' + parent_id;
+        this._http.get(url)
+            .map((res: Response) => res.json().data)
+            .subscribe(data => {
+                this.deleteNestedProducts(parent_id);
+                if (data.length > 0) {
+                    data.forEach((c, i) => {
+                        this.deleteCategory(c.id);
+                        this.deleteNestedProducts(c.id);
+                    });
+                } 
+            });
+    }
+
+    deleteNestedProducts(parentId: number) {       
+        let url = porductsUrl + '/?category_id=' + parentId;
+        this._http.get(url)
+            .map((res: Response) => res.json().data)
+            .subscribe(data => {
+                if (data.length > 0) {
+                    data.forEach((p, i) => {
+                        this._http.delete(porductsUrl + '/' + p.id);
+                    })
+                }
+            });
     }
 
     updateCategory(updateCategory: Category) {
@@ -102,5 +132,5 @@ export class CategoryService {
                     this._categories$.next(this._dataStore.categories);
                 }
             });
-    }    
+    }
 }

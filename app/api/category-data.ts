@@ -119,22 +119,22 @@ export class CategoryData {
             {
                 id: 1,
                 category_id: 16,
-                name: 'galoty',
-                description: 'galoty robocze',
+                name: 'Spodnie',
+                description: 'Spodne robocze',
                 price: 199
             },
              {
                 id: 2,
                 category_id: 16,
-                name: 'asd',
-                description: 'asd robocze',
+                name: 'Spodenki',
+                description: 'Któtke spodenki',
                 price: 199
             },
              {
                 id: 3,
                 category_id: 16,
-                name: 'zxc',
-                description: 'zxc codzinne',
+                name: 'Spodenki',
+                description: 'Moro',
                 price: 199
             }
         ]
