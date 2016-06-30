@@ -23,7 +23,7 @@
         <tr *ngFor="let product of  products | async">
             <td class="md-text-cell">{{product.name}}</td>
             <td>{{product.description}}</td>
-            <td>{{product.price}}</td>
+            <td>{{product.price | currency:'PLN'}}</td>
             <td>
                 <div layout="row" layout-align="end center">
                     <button *ngIf="editMode" md-fab class="md-primary" aria-label="Edit" (click)="editProduct(product)">
